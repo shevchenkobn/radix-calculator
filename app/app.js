@@ -1,3 +1,4 @@
+'use strict';
 function RadixConverter() {
   var convertTokens = {};
   function toDecimal(token) {
@@ -19,7 +20,7 @@ function RadixConverter() {
   }
   function toArbitrary(num) {
     if (typeof num !== 'number' || num < 0 || num > 36) {
-      throw new TypeError('Number must be between 2 and 36');
+      throw new RangeError('Number must be between 2 and 36');
     }
     num = parseInt(num);
     if (!convertTokens[num]) {
@@ -42,7 +43,7 @@ function RadixConverter() {
   function validateRadix() {
     for (var i = 0; i < arguments.length; i++) {
       if (!isValidRadix(arguments[i])) {
-        throw new TypeError('Radix must been between 2 and 36');
+        throw new RangeError('Radix must been between 2 and 36');
       }
     }
     return true;
@@ -316,19 +317,131 @@ function RadixCalculator(id, delimiter) {
       args[i] = args[i].split('');
     }
     switch (action) {
-      case '+':
-        var sum = sum(args, radix);
+      case calculateEnum.ADD:
+        var sum = getSum(args, radix);
+        var sumLength = sum.indexOf(delimiter) >= 0 ?
+          sum.length - 1 : sum.length;
+        var term0Length = args[0].indexOf(delimiter) >= 0 ?
+          args[0].length : args[0].length - 1;
+        var rows = args.length + 1;
+        var columns = Math.max(sumLength, term0Length);
+        var cells = buildTable(rows, columns);
+        for (i = 0; i < args.length; i++) {
+          for (var j = args[i].length - 1, c = cells[0].length;
+               j >= 0; j--, c--) {
+            if (args[i][j] !== delimiter) {
+              cells[c].append(args[i][j]);
+            } else {
+              cells[c++].append(
+                  $('<span>' + delimiter + '</span>').css(delimiterStyle)
+                );
+            }
+          }
+        }
+        cells[0][1].append($('<span>+</span>').css(delimiterStyle));
+        underScore(underScore.enum.TOP, [rows - 1, 1], [1, columns - 1]);
         break;
+      case calculateEnum.SUBTRACT:
+        var difference = getDifference(args, radix);
+        var differenceLength = difference.indexOf(delimiter) >= 0 ?
+          difference.length - 1 : difference.length;
+        var minuendLength = args[0].indexOf(delimiter) >= 0 ?
+          args[0].length : args[0].length - 1;
+        rows = args.length + 1;
+        columns = Math.max(differenceLength, args.reduce(function(prev, curr) {
+            var index = curr.indexOf(delimiter);
+            curr = index >= 0 ? curr.length : curr.length + 1;
+            return Math.max(prev, curr);
+          }, 1)
+        );
+        cells = buildTable(rows, columns);
+        for (i = 0; i < args.length; i++) {
+          for (j = args[i].length - 1, c = cells[0].length;
+               j >= 0; j--, c--) {
+            if (args[i][j] !== delimiter) {
+              cells[c].append(args[i][j]);
+            } else {
+              cells[c++].append(
+                $('<span>' + delimiter + '</span>').css(delimiterStyle)
+              );
+            }
+          }
+        }
+        cells[0][1].append($('<span>-</span>').css(delimiterStyle));
+        underScore(underScore.enum.TOP, [rows - 1, 1], [1, columns - 1]);
+        break;
+        break;
+      // '✕'
     }
-    function sum(args, radix) {
+    function getSum(args, radix) {
+      validateAndAlign(args);
+      args.sort(function(a, b) { return b.length - a.length; });
+      var sum = args[0].slice();
+      for (var i = 1; i < args.length; i++) {
+        var transitional = 0;
+        for (var j = args[i].length - 1, r = sum.length;
+             j >= 0; j--, r--) {
+          if (!converter.isAnyRadixNumber(args[i][j])) {
+            continue;
+          }
+          var result = converter.toDecimal(sum[r]) +
+            converter.toDecimal(args[i][j]) + transitional;
+          var newCipher = result % radix;
+          sum[r] = converter.toArbitrary(newCipher);
+          transitional = result - newCipher;
+        }
+        if (transitional) {
+          sum.unshift(converter.toArbitrary(transitional));
+        }
+      }
+      return sum
+    }
+    function getDifference(args, radix) {
+      validateAndAlign(args);
+      function toDecimalDecoder(cipher) {
+        return converter.isAnyRadixNumber(cipher) ?
+          converter.toDecimal(cipher) : cipher;
+      }
+      var difference = args[0].map(toDecimalDecoder);
+      for (var i = 1; i < args.length; i++) {
+        var temp = args[i].map(toDecimalDecoder);
+        for (var j = temp.length - 1, r = difference.length;
+             j >= 0; j--, r--) {
+          if (!converter.isAnyRadixNumber(temp[j])) {
+            continue;
+          }
+          var result = difference[r] - temp[j];
+          if (result < 0 && r !== 0) {
+            for (var k = r; k > 0 && difference <= 0; k--) {
+              difference[k] += radix;
+            }
+            difference[k]--;
+          }
+        }
+      }
+      if (difference[0] < 0) {
+        difference[0] = -difference[0];
+        difference.unshift('-');
+      }
+      return difference.map(function(cipher) {
+        return converter.isAnyRadixNumber(cipher) ?
+          converter.toArbitrary(cipher) : cipher;
+        });
+    }
+    function validateAndAlign(args) {
       var maxFractionLength = args.reduce(function(prev, curr) {
-          var index = curr.indexOf(delimiter);
-          curr = index > 0 ? curr.length - 1 - index : 0;
-          return Math.max(prev, curr);
-        }, 0);
+        if (curr[0] === '-') {
+          throw new RangeError('All arguments must be non-negative');
+        }
+        var index = curr.indexOf(delimiter);
+        // TODO: check this shit with index > 0
+        curr = index > 0 ? curr.length - 1 - index : 0;
+        return Math.max(prev, curr);
+      }, 0);
       if (maxFractionLength > 0) {
         for (var i = 0; i < args.length; i++) {
           var index = args[i].indexOf(delimiter);
+          // TODO: check this shit with index > 0
           var zerosNumber = maxFractionLength - (index > 0 ?
             curr.length - 1 - index : 0);
           if (index < 0) {
@@ -341,28 +454,15 @@ function RadixCalculator(id, delimiter) {
           }
         }
       }
-      args.sort(function(a, b) { return b.length - a.length; });
-      var sum = args[0];
-      for (i = 1; i < args.length; i++) {
-        var transitional = 0;
-        for (j = args[i].length - 1, r = sum.length;
-             j >= 0; j--, r--) {
-          if (!converter.isAnyRadixNumber(args[i])) {
-            continue;
-          }
-          var result = converter.toDecimal(sum[r]) +
-            converter.toDecimal(args[i][j]) + transitional;
-          newCipher = result % radix;
-          sum[r] = converter.toArbitrary(newCipher);
-          transitional = result - newCipher;
-        }
-        if (transitional) {
-          sum.unshift(converter.toArbitrary(transitional));
-        }
-      }
-      return sum
     }
   }
+  var calculateEnum = {
+    ADD: '+',
+    SUBTRACT: '-',
+    MULTIPLY: '*',
+    DIVIDE: '/'
+  };
+  Object.seal(calculateEnum);
 }
 RadixCalculator('output');
 
