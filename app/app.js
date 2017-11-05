@@ -35,6 +35,31 @@ function RadixConverter() {
   function isAnyRadixCypher(str) {
     return alphaNumRegex.test(str);
   }
+  function isValidRadix(radix) {
+    radix = parseInt(radix);
+    return !(isNaN(radix) || radix < 2 || radix > 36);
+  }
+  function validateRadix() {
+    for (var i = 0; i < arguments.length; i++) {
+      if (!isValidRadix(arguments[i])) {
+        throw new TypeError('Radix must been between 2 and 36');
+      }
+    }
+    return true;
+  }
+  function isValidNumber(num, radix) {
+    validateRadix(radix);
+    num = (num + '').toUpperCase();
+    var maxCipher = toArbitrary(radix - 1);
+    if (maxCipher < 10) {
+      var numberTest = new RegExp('^-?[0-' + maxCipher + ']*\\' +
+        delimiter + '?[0-' + maxCipher + ']*$');
+    } else {
+      var numberTest = new RegExp('^-?[0-9A-' + maxCipher + ']*\\' +
+        delimiter + '?[0-9A-' + maxCipher + ']*$');
+    }
+    return numberTest.test(num);
+  }
   
   var fractionLimit = -1;
   var crop = false;
@@ -43,27 +68,17 @@ function RadixConverter() {
   {
     inputRadix = parseInt(inputRadix);
     outputRadix = parseInt(outputRadix);
-    if (isNaN(outputRadix) || isNaN(inputRadix) || inputRadix < 2
-      || inputRadix > 36 || outputRadix < 2 || outputRadix > 36) {
-      throw new TypeError('Radix must been between 2 and 36');
-    } else if (inputRadix === outputRadix) {
+    validateRadix(inputRadix, outputRadix);
+    if (inputRadix === outputRadix) {
       throw new TypeError('Radixes are equal');
     }
     
     var result = 0;
     if (outputRadix === 10) {
-      num = (num + '').toUpperCase();
-      var maxCipher = toArbitrary(inputRadix - 1);
-      if (maxCipher < 10) {
-        var numberTest = new RegExp('^-?[0-' + maxCipher + ']*\\' +
-          delimiter + '?[0-' + maxCipher + ']*$');
-      } else {
-        var numberTest = new RegExp('^-?[0-9A-' + maxCipher + ']*\\' +
-          delimiter + '?[0-9A-' + maxCipher + ']*$');
-      }
-      if (!numberTest.test(num)) {
+      if (!isValidNumber(num, inputRadix)) {
         throw new TypeError('Wrong input format');
       }
+      num = (num + '').toUpperCase();
       var pointIndex = num.indexOf('.'),
         power = pointIndex < 0 ? num.length - 1 : pointIndex - 1;
       if (num[0] === '-') {
@@ -171,7 +186,9 @@ function RadixConverter() {
       set: function(fill) {
         crop = !!fill;
       }
-    }
+    },
+    isValidNumber: isValidNumber,
+    isValidRadix: isValidRadix
   });
   Object.seal(convert);
   return convert;
@@ -216,7 +233,7 @@ function RadixCalculator(id, delimiter) {
     'border-collapse': 'collapse',
     'table-layout': 'fixed'
   };
-  var separatorStyle = {
+  var delimiterStyle = {
     position: 'absolute',
     height: '100%',
     top: '0.1rem',
@@ -226,7 +243,15 @@ function RadixCalculator(id, delimiter) {
     'z-index': 999,
     'border-width': 0
   };
-  var trStyle = {
+  var signStyle = {
+    position: 'absolute',
+    height: '100%',
+    top: '0.5rem',
+    left: '0.7rem',
+    'font-weight': '900',
+    'font-size': '1.2rem',
+    'z-index': 999,
+    'border-width': 0
   };
   function buildTable(rows, columns) {
     container.empty();
@@ -234,19 +259,16 @@ function RadixCalculator(id, delimiter) {
       .css(tableStyle);
     var cells = [];
     for (var i = 0; i < rows; i++) {
-      var row = $('<tr>').appendTo(table)
-        .css(trStyle);
+      var row = $('<tr>').appendTo(table);
       cells[i] = [];
       for (var j = 0; j < columns; j++) {
         cells[i][j] = $('<td>1</td>').appendTo(row)
           .css(tdStyle);
       }
     }
-    cells[0][1].css('border-color', '#000');
     return cells;
   }
-  var cells = buildTable(5,10);
-  
+  buildTable(5,5);
   // startArray = [row, column], lengthArray = [rowLength, columnLength]
   function underScore(borderPieces, startArray, lengthArray) {
     for (var i = startArray[0]; i < startArray[0] + lengthArray[0]; i++) {
@@ -280,6 +302,67 @@ function RadixCalculator(id, delimiter) {
     BOTTOM: 8,
     LEFT: 16
   };
+  
+  var converter = new RadixConverter();
+  converter.delimiter = delimiter;
+  function calculate(action, radix, args) {
+    if (args.length < 2) {
+      throw new TypeError('Not enough arguments for operation');
+    }
+    for (var i = 0; i < args.length; i++) {
+      if (!converter.isValidNumber(args[i], radix)) {
+        throw new TypeError('Argument ' + args[i] + ' is invalid');
+      }
+      args[i] = args[i].split('');
+    }
+    switch (action) {
+      case '+':
+        var sum = sum(args, radix);
+        break;
+    }
+    function sum(args, radix) {
+      var maxFractionLength = args.reduce(function(prev, curr) {
+          var index = curr.indexOf(delimiter);
+          curr = index > 0 ? curr.length - 1 - index : 0;
+          return Math.max(prev, curr);
+        }, 0);
+      if (maxFractionLength > 0) {
+        for (var i = 0; i < args.length; i++) {
+          var index = args[i].indexOf(delimiter);
+          var zerosNumber = maxFractionLength - (index > 0 ?
+            curr.length - 1 - index : 0);
+          if (index < 0) {
+            args[i].push(delimiter);
+          } else if (index === 0) {
+            args[i].unshift('0');
+          }
+          for (var j = 0; j < zerosNumber; j++) {
+            args[i].push('0');
+          }
+        }
+      }
+      args.sort(function(a, b) { return b.length - a.length; });
+      var sum = args[0];
+      for (i = 1; i < args.length; i++) {
+        var transitional = 0;
+        for (j = args[i].length - 1, r = sum.length;
+             j >= 0; j--, r--) {
+          if (!converter.isAnyRadixNumber(args[i])) {
+            continue;
+          }
+          var result = converter.toDecimal(sum[r]) +
+            converter.toDecimal(args[i][j]) + transitional;
+          newCipher = result % radix;
+          sum[r] = converter.toArbitrary(newCipher);
+          transitional = result - newCipher;
+        }
+        if (transitional) {
+          sum.unshift(converter.toArbitrary(transitional));
+        }
+      }
+      return sum
+    }
+  }
 }
 RadixCalculator('output');
 
