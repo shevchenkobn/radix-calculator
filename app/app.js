@@ -356,6 +356,7 @@ function RadixCalculator(id, delimiter) {
       }
       args[i] = args[i].split('');
     }
+    var result;
     switch (action) {
       case calculateEnum.ADD:
         var sum = getSum(args, radix);
@@ -365,6 +366,7 @@ function RadixCalculator(id, delimiter) {
         fillRowsFromTop(args);
         putSign('+', 0, columns - getCellsNumber(args[0]) - 1);
         putResultAndUnderscore(sum);
+        result = sum;
         break;
       case calculateEnum.SUBTRACT:
         var difference = getDifference(args, radix);
@@ -377,13 +379,14 @@ function RadixCalculator(id, delimiter) {
         fillRowsFromTop(args);
         putSign('-');
         putResultAndUnderscore(difference);
+        result = difference;
         break;
       case calculateEnum.MULTIPLY:
-        var result = getProduct(args, radix);
-        rows = 3 + result.tempCalculations.reduce(function(prev, curr) {
+        var product = getProduct(args, radix);
+        rows = 3 + product.tempCalculations.reduce(function(prev, curr) {
             return +curr ? prev + 1 : prev;
           }, 0);
-        columns = getCellsNumber(result.product);
+        columns = getCellsNumber(product.product);
         buildTable(rows, columns);
         fillRowsFromTop(args);
         putSign('✕', 0, c);
@@ -393,13 +396,19 @@ function RadixCalculator(id, delimiter) {
         underscore(underscore.enum.TOP, [args.length, c],
           [1, multipliersLength]);
         i = 0;
-        for (var r = args.length; i < result.tempCalculations.length; i++, r++) {
+        for (var r = args.length; i < product.tempCalculations.length; i++, r++) {
           fillRow(args[i], r, i);
         }
-        putResultAndUnderscore(result.product);
+        putResultAndUnderscore(product.product);
+        result = product.product;
         break;
-      // '✕'
+      case calculateEnum.DIVIDE:
+        var quotient;
+        
+        result = quotient;
+        break;
     }
+    return result;
     function getSum(args, radix, isTrusted) {
       if (!isTrusted) {
         validateAndAlign(args);
