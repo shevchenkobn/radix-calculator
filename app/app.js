@@ -319,12 +319,9 @@ function RadixCalculator(id, delimiter) {
     switch (action) {
       case calculateEnum.ADD:
         var sum = getSum(args, radix);
-        var sumLength = sum.indexOf(delimiter) >= 0 ?
-          sum.length - 1 : sum.length;
-        var term0Length = args[0].indexOf(delimiter) >= 0 ?
-          args[0].length : args[0].length - 1;
         var rows = args.length + 1;
-        var columns = Math.max(sumLength, term0Length);
+        var columns = args[0].indexOf(delimiter) >= 0 ?
+          args[0].length : args[0].length + 1;
         var cells = buildTable(rows, columns);
         for (i = 0; i < args.length; i++) {
           for (var j = args[i].length - 1, c = cells[0].length;
@@ -338,45 +335,64 @@ function RadixCalculator(id, delimiter) {
             }
           }
         }
-        cells[0][1].append($('<span>+</span>').css(delimiterStyle));
+        i--;
+        for (j = sum.length - 1, c = cells[0].length;
+             j >= 0; j--, c--) {
+          if (sum[j] !== delimiter) {
+            cells[i][c].append(sum[j]);
+          } else {
+            cells[i][c++].append(
+              $('<span>' + delimiter + '</span>').css(delimiterStyle)
+            );
+          }
+        }
+        cells[0][1].append($('<span>+</span>').css(signStyle));
         underScore(underScore.enum.TOP, [rows - 1, 1], [1, columns - 1]);
         break;
       case calculateEnum.SUBTRACT:
         var difference = getDifference(args, radix);
-        var differenceLength = difference.indexOf(delimiter) >= 0 ?
-          difference.length - 1 : difference.length;
-        var minuendLength = args[0].indexOf(delimiter) >= 0 ?
-          args[0].length : args[0].length - 1;
         rows = args.length + 1;
-        columns = Math.max(differenceLength, args.reduce(function(prev, curr) {
-            var index = curr.indexOf(delimiter);
+        var index = difference.indexOf(delimiter);
+        columns = args.reduce(function(prev, curr) {
             curr = index >= 0 ? curr.length : curr.length + 1;
             return Math.max(prev, curr);
-          }, 1)
-        );
+          });
         cells = buildTable(rows, columns);
         for (i = 0; i < args.length; i++) {
           for (j = args[i].length - 1, c = cells[0].length;
                j >= 0; j--, c--) {
             if (args[i][j] !== delimiter) {
-              cells[c].append(args[i][j]);
+              cells[i][c].append(args[i][j]);
             } else {
-              cells[c++].append(
+              cells[i][c++].append(
                 $('<span>' + delimiter + '</span>').css(delimiterStyle)
               );
             }
           }
         }
-        cells[0][1].append($('<span>-</span>').css(delimiterStyle));
+        i--;
+        for (j = difference.length - 1, c = cells[0].length;
+             j >= 0; j--, c--) {
+          if (difference[j] !== delimiter) {
+            cells[i][c].append(difference[j]);
+          } else {
+            cells[i][c++].append(
+              $('<span>' + delimiter + '</span>').css(delimiterStyle)
+            );
+          }
+        }
+        cells[0][1].append($('<span>-</span>').css(signStyle));
         underScore(underScore.enum.TOP, [rows - 1, 1], [1, columns - 1]);
         break;
         break;
       // '✕'
     }
-    function getSum(args, radix) {
-      validateAndAlign(args);
+    function getSum(args, radix, isTrusted) {
+      if (!isTrusted) {
+        validateAndAlign(args);
+      }
       args.sort(function(a, b) { return b.length - a.length; });
-      var sum = args[0].slice();
+      var sum = args[0].map(toDecimal);
       for (var i = 1; i < args.length; i++) {
         var transitional = 0;
         for (var j = args[i].length - 1, r = sum.length;
@@ -384,7 +400,7 @@ function RadixCalculator(id, delimiter) {
           if (!converter.isAnyRadixNumber(args[i][j])) {
             continue;
           }
-          var result = converter.toDecimal(sum[r]) +
+          var result = sum[r] +
             converter.toDecimal(args[i][j]) + transitional;
           var newCipher = result % radix;
           sum[r] = converter.toArbitrary(newCipher);
@@ -394,7 +410,7 @@ function RadixCalculator(id, delimiter) {
           sum.unshift(converter.toArbitrary(transitional));
         }
       }
-      return sum
+      return sum.map(toArbitrary);
     }
     function getDifference(args, radix) {
       validateAndAlign(args);
@@ -402,31 +418,56 @@ function RadixCalculator(id, delimiter) {
         return converter.isAnyRadixNumber(cipher) ?
           converter.toDecimal(cipher) : cipher;
       }
+      function isFirstLarger(first, second) {
+        if (second.length > first.length) {
+          return false;
+        } else if (second.length < first.length) {
+          return true;
+        } else {
+          for (var i = 0; i < first.length; i++) {
+            if (first[i] > second[i]) {
+              return true;
+            } else if (first[i] < second[i]) {
+              return false;
+            }
+          }
+        }
+      }
       var difference = args[0].map(toDecimalDecoder);
+      var negativeDifference = false;
       for (var i = 1; i < args.length; i++) {
         var temp = args[i].map(toDecimalDecoder);
-        for (var j = temp.length - 1, r = difference.length;
-             j >= 0; j--, r--) {
+        negativeDifference = !isFirstLarger(difference, temp);
+        if (negativeDifference) {
+          var t = temp;
+          temp = difference;
+          difference = t;
+        }
+        for (var j = temp.length - 1, d = difference.length;
+             j >= 0 && d >= 0; j--, d--) {
           if (!converter.isAnyRadixNumber(temp[j])) {
             continue;
           }
-          var result = difference[r] - temp[j];
-          if (result < 0 && r !== 0) {
-            for (var k = r; k > 0 && difference <= 0; k--) {
+          var result = difference[d] - temp[j];
+          if (result < 0 && d !== 0) {
+            for (var k = d; k > 0 && difference[k] <= 0; k--) {
               difference[k] += radix;
             }
             difference[k]--;
           }
         }
+        if (negativeDifference) {
+          negativeDifference = true;
+          temp = [difference.map(toArbitrary)].concat(args.slice(i + 1));
+          difference = getSum(temp, radix, true);
+          break;
+        }
       }
-      if (difference[0] < 0) {
-        difference[0] = -difference[0];
+      if (negativeDifference) {
         difference.unshift('-');
+        return difference;
       }
-      return difference.map(function(cipher) {
-        return converter.isAnyRadixNumber(cipher) ?
-          converter.toArbitrary(cipher) : cipher;
-        });
+      return difference.map(toArbitrary);
     }
     function validateAndAlign(args) {
       var maxFractionLength = args.reduce(function(prev, curr) {
@@ -434,16 +475,14 @@ function RadixCalculator(id, delimiter) {
           throw new RangeError('All arguments must be non-negative');
         }
         var index = curr.indexOf(delimiter);
-        // TODO: check this shit with index > 0
-        curr = index > 0 ? curr.length - 1 - index : 0;
+        curr = index >= 0 ? curr.length - 1 - index : 0;
         return Math.max(prev, curr);
       }, 0);
       if (maxFractionLength > 0) {
         for (var i = 0; i < args.length; i++) {
           var index = args[i].indexOf(delimiter);
-          // TODO: check this shit with index > 0
-          var zerosNumber = maxFractionLength - (index > 0 ?
-            curr.length - 1 - index : 0);
+          var zerosNumber = maxFractionLength - (index >= 0 ?
+            args[i].length - 1 - index : 0);
           if (index < 0) {
             args[i].push(delimiter);
           } else if (index === 0) {
@@ -454,6 +493,14 @@ function RadixCalculator(id, delimiter) {
           }
         }
       }
+    }
+    function toArbitrary(cipher) {
+      return converter.isAnyRadixNumber(cipher) ?
+        converter.toArbitrary(cipher) : cipher;
+    }
+    function toDecimal(cipher) {
+      return converter.isAnyRadixNumber(cipher) ?
+        converter.toDecimal(cipher) : cipher;
     }
   }
   var calculateEnum = {
