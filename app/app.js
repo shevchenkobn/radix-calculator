@@ -254,11 +254,12 @@ function RadixCalculator(id, delimiter) {
     'z-index': 999,
     'border-width': 0
   };
+  var cells;
   function buildTable(rows, columns) {
     container.empty();
     var table = $('<table>').appendTo(container)
       .css(tableStyle);
-    var cells = [];
+    cells = [];
     for (var i = 0; i < rows; i++) {
       var row = $('<tr>').appendTo(table);
       cells[i] = [];
@@ -269,25 +270,24 @@ function RadixCalculator(id, delimiter) {
     }
     return cells;
   }
-  buildTable(5,5);
   // startArray = [row, column], lengthArray = [rowLength, columnLength]
-  function underScore(borderPieces, startArray, lengthArray) {
+  function underscore(borderPieces, startArray, lengthArray) {
     for (var i = startArray[0]; i < startArray[0] + lengthArray[0]; i++) {
       for (var j = startArray[1]; j < startArray[1] + lengthArray[1]; j++) {
-        if (borderPieces & underScore.enum.TOP) {
+        if (borderPieces & underscore.enum.TOP) {
           if (i > 0) {
             cells[i - 1][j].css('border-bottom-color', '#000');
           } else {
             cells[i][j].css('border-top-color', '#000');
           }
         }
-        if (borderPieces & underScore.enum.RIGHT) {
+        if (borderPieces & underscore.enum.RIGHT) {
           cells[i][j].css('border-right-color', '#000');
         }
-        if (borderPieces & underScore.enum.BOTTOM) {
+        if (borderPieces & underscore.enum.BOTTOM) {
           cells[i][j].css('border-bottom-color', '#000');
         }
-        if (borderPieces & underScore.enum.LEFT) {
+        if (borderPieces & underscore.enum.LEFT) {
           if (j > 0) {
             cells[i][j - 1].css('border-right-color', '#000');
           } else {
@@ -297,12 +297,52 @@ function RadixCalculator(id, delimiter) {
       }
     }
   }
-  underScore.enum = {
+  underscore.enum = {
     TOP: 2,
     RIGHT: 4,
     BOTTOM: 8,
     LEFT: 16
   };
+  function fillRowsFromTop(args) {
+    for (var i = 0; i < args.length; i++) {
+      fillRow(args[i], i);
+    }
+  }
+  function fillRow(arg, i, offset) {
+    if (typeof offset === 'undefined') {
+      offset = 0;
+    }
+    for (var j = arg.length - 1, c = cells[0].length - offset;
+         j >= 0; j--, c--) {
+      if (arg[j] !== delimiter) {
+        cells[i][c].append(arg[j]);
+      } else {
+        cells[i][c++].append(
+          $('<span>' + delimiter + '</span>').css(delimiterStyle)
+        );
+      }
+    }
+  }
+  function putResultAndUnderscore(result) {
+    fillRow(result, cells.length - 1);
+    underscore(underscore.enum.TOP,
+      [cells.length - 1, 1],
+      [1, getCellsNumber(result)]);
+  }
+  function putSign(sign, row, col) {
+    if (!row) {
+      row = 0;
+    }
+    if (!col) {
+      col = 1;
+    }
+    cells[row][col].append($('<span>' + sign + '</span>')
+      .css(signStyle));
+  }
+  function getCellsNumber(arg) {
+    return arg.indexOf(delimiter) >= 0 ?
+      arg.length : arg.length + 1;
+  }
   
   var converter = new RadixConverter();
   converter.delimiter = delimiter;
@@ -320,70 +360,43 @@ function RadixCalculator(id, delimiter) {
       case calculateEnum.ADD:
         var sum = getSum(args, radix);
         var rows = args.length + 1;
-        var columns = args[0].indexOf(delimiter) >= 0 ?
-          args[0].length : args[0].length + 1;
-        var cells = buildTable(rows, columns);
-        for (i = 0; i < args.length; i++) {
-          for (var j = args[i].length - 1, c = cells[0].length;
-               j >= 0; j--, c--) {
-            if (args[i][j] !== delimiter) {
-              cells[c].append(args[i][j]);
-            } else {
-              cells[c++].append(
-                  $('<span>' + delimiter + '</span>').css(delimiterStyle)
-                );
-            }
-          }
-        }
-        i--;
-        for (j = sum.length - 1, c = cells[0].length;
-             j >= 0; j--, c--) {
-          if (sum[j] !== delimiter) {
-            cells[i][c].append(sum[j]);
-          } else {
-            cells[i][c++].append(
-              $('<span>' + delimiter + '</span>').css(delimiterStyle)
-            );
-          }
-        }
-        cells[0][1].append($('<span>+</span>').css(signStyle));
-        underScore(underScore.enum.TOP, [rows - 1, 1], [1, columns - 1]);
+        var columns = getCellsNumber(sum);
+        buildTable(rows, columns);
+        fillRowsFromTop(args);
+        putSign('+', 0, columns - getCellsNumber(args[0]) - 1);
+        putResultAndUnderscore(sum);
         break;
       case calculateEnum.SUBTRACT:
         var difference = getDifference(args, radix);
         rows = args.length + 1;
         var index = difference.indexOf(delimiter);
         columns = args.reduce(function(prev, curr) {
-            curr = index >= 0 ? curr.length : curr.length + 1;
-            return Math.max(prev, curr);
+            return Math.max(prev, index >= 0 ? curr.length - 1 - index : 0);
           });
-        cells = buildTable(rows, columns);
-        for (i = 0; i < args.length; i++) {
-          for (j = args[i].length - 1, c = cells[0].length;
-               j >= 0; j--, c--) {
-            if (args[i][j] !== delimiter) {
-              cells[i][c].append(args[i][j]);
-            } else {
-              cells[i][c++].append(
-                $('<span>' + delimiter + '</span>').css(delimiterStyle)
-              );
-            }
-          }
-        }
-        i--;
-        for (j = difference.length - 1, c = cells[0].length;
-             j >= 0; j--, c--) {
-          if (difference[j] !== delimiter) {
-            cells[i][c].append(difference[j]);
-          } else {
-            cells[i][c++].append(
-              $('<span>' + delimiter + '</span>').css(delimiterStyle)
-            );
-          }
-        }
-        cells[0][1].append($('<span>-</span>').css(signStyle));
-        underScore(underScore.enum.TOP, [rows - 1, 1], [1, columns - 1]);
+        buildTable(rows, columns);
+        fillRowsFromTop(args);
+        putSign('-');
+        putResultAndUnderscore(difference);
         break;
+      case calculateEnum.MULTIPLY:
+        var result = getProduct(args, radix);
+        rows = 3 + result.tempCalculations.reduce(function(prev, curr) {
+            return +curr ? prev + 1 : prev;
+          }, 0);
+        columns = getCellsNumber(result.product);
+        buildTable(rows, columns);
+        fillRowsFromTop(args);
+        putSign('✕', 0, c);
+        var multipliersLength = Math.max(getCellsNumber(args[0]),
+          getCellsNumber(args[1])) - 1;
+        var c = columns - multipliersLength;
+        underscore(underscore.enum.TOP, [args.length, c],
+          [1, multipliersLength]);
+        i = 0;
+        for (var r = args.length; i < result.tempCalculations.length; i++, r++) {
+          fillRow(args[i], r, i);
+        }
+        putResultAndUnderscore(result.product);
         break;
       // '✕'
     }
@@ -404,7 +417,7 @@ function RadixCalculator(id, delimiter) {
             converter.toDecimal(args[i][j]) + transitional;
           var newCipher = result % radix;
           sum[r] = converter.toArbitrary(newCipher);
-          transitional = result - newCipher;
+          transitional = parseInt((result - newCipher) / radix);
         }
         if (transitional) {
           sum.unshift(converter.toArbitrary(transitional));
@@ -474,15 +487,12 @@ function RadixCalculator(id, delimiter) {
         if (curr[0] === '-') {
           throw new RangeError('All arguments must be non-negative');
         }
-        var index = curr.indexOf(delimiter);
-        curr = index >= 0 ? curr.length - 1 - index : 0;
-        return Math.max(prev, curr);
+        return Math.max(prev, getFractionLength(curr));
       }, 0);
       if (maxFractionLength > 0) {
         for (var i = 0; i < args.length; i++) {
           var index = args[i].indexOf(delimiter);
-          var zerosNumber = maxFractionLength - (index >= 0 ?
-            args[i].length - 1 - index : 0);
+          var zerosNumber = maxFractionLength - getFractionLength(args[i]);
           if (index < 0) {
             args[i].push(delimiter);
           } else if (index === 0) {
@@ -494,6 +504,60 @@ function RadixCalculator(id, delimiter) {
         }
       }
     }
+    function getProduct(args, radix) {
+      var tempCalculations = [],
+        firstMultiplier = args[0].map(toDecimal);
+      for (var i = args[1].length - 1; i >= 0; i--) {
+        if (!converter.isAnyRadixNumber(args[0])) {
+          continue;
+        }
+        var transitional = 0;
+        var temp = [];
+        for (var j = firstMultiplier.length - 1; j >= 0; j--) {
+          if (converter.isAnyRadixNumber(firstMultiplier[j])) {
+            continue;
+          }
+          var result = firstMultiplier[j] *
+            converter.toDecimal(args[1]) + transitional;
+          var newCipher = result % radix;
+          temp.push(converter.toArbitrary(newCipher));
+          transitional = parseInt((result - newCipher) / radix);
+        }
+        if (transitional !== 0) {
+          temp.push(converter.toArbitrary(transitional));
+        }
+        temp.reverse();
+        if (+converter(temp.join(''), radix, 10) !== 0) {
+          tempCalculations.push(temp);
+        } else {
+          tempCalculations.push('0');
+        }
+      }
+      var product = getSum(tempCalculations.map(function (arg, index) {
+          var zeros = [];
+          for (var i = 0; i < index; i++) {
+            zeros.push('0');
+          }
+          return arg.concat(zeros);
+        }), radix, true);
+      var fractionLength = getFractionLength(args[0]) + getFractionLength(args[1]);
+      if (fractionLength !== 0) {
+        if (fractionLength >= product.length) {
+          var zeros = ['0', delimiter];
+          for (i = product.length; i < fractionLength; i++) {
+            zeros.push('0');
+          }
+          product = zeros.concat(product);
+        } else {
+          product.splice(-fractionLength, 0, delimiter);
+        }
+      }
+      return {
+        tempCalculations: tempCalculations,
+        product: args[0][0] === '-' ^ args[0][1] === '-' ? product.unshift('-') :
+          product
+      };
+    }
     function toArbitrary(cipher) {
       return converter.isAnyRadixNumber(cipher) ?
         converter.toArbitrary(cipher) : cipher;
@@ -501,6 +565,10 @@ function RadixCalculator(id, delimiter) {
     function toDecimal(cipher) {
       return converter.isAnyRadixNumber(cipher) ?
         converter.toDecimal(cipher) : cipher;
+    }
+    function getFractionLength(arg) {
+      var index = arg.indexOf(delimiter);
+      return index >= 0 ? arg.length - 1 - index : 0;
     }
   }
   var calculateEnum = {
