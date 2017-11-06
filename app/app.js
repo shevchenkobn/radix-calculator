@@ -424,12 +424,18 @@ function RadixCalculator(id, delimiter) {
           }
           var result = sum[r] +
             converter.toDecimal(args[i][j]) + transitional;
-          var newCipher = result % radix;
-          sum[r] = converter.toArbitrary(newCipher);
-          transitional = parseInt((result - newCipher) / radix);
+          sum[r] = result % radix;
+          transitional = parseInt((result - sum[r]) / radix);
         }
         if (transitional) {
-          sum.unshift(converter.toArbitrary(transitional));
+          while (transitional && r >= 0) {
+            result = sum[r] + transitional;
+            sum[r] = result % radix;
+            transitional = parseInt((result - sum[r]) / radix);
+          }
+          if (r < 0) {
+            sum.unshift(transitional);
+          }
         }
       }
       return sum.map(toArbitrary);
