@@ -403,7 +403,7 @@ function RadixCalculator(id, delimiter) {
         result = product.product;
         break;
       case calculateEnum.DIVIDE:
-        var quotient;
+        var quotient = getQuotient(args, radix);
         
         result = quotient;
         break;
@@ -566,6 +566,9 @@ function RadixCalculator(id, delimiter) {
         product: args[0][0] === '-' ^ args[0][1] === '-' ? product.unshift('-') :
           product
       };
+    }
+    function getQuotient(args, radix) {
+      return 0;
     }
     function toArbitrary(cipher) {
       return converter.isAnyRadixNumber(cipher) ?

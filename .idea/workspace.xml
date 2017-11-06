@@ -29,11 +29,12 @@
       <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-823">
-              <caret line="406" column="8" lean-forward="true" selection-start-line="406" selection-start-column="8" selection-end-line="406" selection-end-column="8" />
+            <state relative-caret-position="-328">
+              <caret line="405" column="46" lean-forward="false" selection-start-line="405" selection-start-column="46" selection-end-line="405" selection-end-column="46" />
               <folding>
                 <element signature="n#!!block;n#getDifference#0;n#!!block;n#calculate#0;n#!!block;n#RadixCalculator#0" expanded="false" />
                 <element signature="n#!!block;n#validateAndAlign#0;n#!!block;n#calculate#0;n#!!block;n#RadixCalculator#0" expanded="false" />
+                <element signature="n#!!block;n#getProduct#0;n#!!block;n#calculate#0;n#!!block;n#RadixCalculator#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -174,12 +175,12 @@
       <workItem from="1509781174733" duration="7907000" />
       <workItem from="1509870008236" duration="15734000" />
       <workItem from="1509899224682" duration="5592000" />
-      <workItem from="1509985702792" duration="11391000" />
+      <workItem from="1509985702792" duration="11561000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="53119000" />
+    <option name="totallyTimeSpent" value="53289000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1376" height="744" extended-state="6" />
@@ -229,6 +230,7 @@
           <folding>
             <element signature="n#!!block;n#getDifference#0;n#!!block;n#calculate#0;n#!!block;n#RadixCalculator#0" expanded="false" />
             <element signature="n#!!block;n#validateAndAlign#0;n#!!block;n#calculate#0;n#!!block;n#RadixCalculator#0" expanded="false" />
+            <element signature="n#!!block;n#getProduct#0;n#!!block;n#calculate#0;n#!!block;n#RadixCalculator#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -248,6 +250,7 @@
           <folding>
             <element signature="n#!!block;n#getDifference#0;n#!!block;n#calculate#0;n#!!block;n#RadixCalculator#0" expanded="false" />
             <element signature="n#!!block;n#validateAndAlign#0;n#!!block;n#calculate#0;n#!!block;n#RadixCalculator#0" expanded="false" />
+            <element signature="n#!!block;n#getProduct#0;n#!!block;n#calculate#0;n#!!block;n#RadixCalculator#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -267,6 +270,7 @@
           <folding>
             <element signature="n#!!block;n#getDifference#0;n#!!block;n#calculate#0;n#!!block;n#RadixCalculator#0" expanded="false" />
             <element signature="n#!!block;n#validateAndAlign#0;n#!!block;n#calculate#0;n#!!block;n#RadixCalculator#0" expanded="false" />
+            <element signature="n#!!block;n#getProduct#0;n#!!block;n#calculate#0;n#!!block;n#RadixCalculator#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -286,6 +290,7 @@
           <folding>
             <element signature="n#!!block;n#getDifference#0;n#!!block;n#calculate#0;n#!!block;n#RadixCalculator#0" expanded="false" />
             <element signature="n#!!block;n#validateAndAlign#0;n#!!block;n#calculate#0;n#!!block;n#RadixCalculator#0" expanded="false" />
+            <element signature="n#!!block;n#getProduct#0;n#!!block;n#calculate#0;n#!!block;n#RadixCalculator#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -305,6 +310,7 @@
           <folding>
             <element signature="n#!!block;n#getDifference#0;n#!!block;n#calculate#0;n#!!block;n#RadixCalculator#0" expanded="false" />
             <element signature="n#!!block;n#validateAndAlign#0;n#!!block;n#calculate#0;n#!!block;n#RadixCalculator#0" expanded="false" />
+            <element signature="n#!!block;n#getProduct#0;n#!!block;n#calculate#0;n#!!block;n#RadixCalculator#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -324,6 +330,7 @@
           <folding>
             <element signature="n#!!block;n#getDifference#0;n#!!block;n#calculate#0;n#!!block;n#RadixCalculator#0" expanded="false" />
             <element signature="n#!!block;n#validateAndAlign#0;n#!!block;n#calculate#0;n#!!block;n#RadixCalculator#0" expanded="false" />
+            <element signature="n#!!block;n#getProduct#0;n#!!block;n#calculate#0;n#!!block;n#RadixCalculator#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -338,11 +345,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-823">
-          <caret line="406" column="8" lean-forward="true" selection-start-line="406" selection-start-column="8" selection-end-line="406" selection-end-column="8" />
+        <state relative-caret-position="-328">
+          <caret line="405" column="46" lean-forward="false" selection-start-line="405" selection-start-column="46" selection-end-line="405" selection-end-column="46" />
           <folding>
             <element signature="n#!!block;n#getDifference#0;n#!!block;n#calculate#0;n#!!block;n#RadixCalculator#0" expanded="false" />
             <element signature="n#!!block;n#validateAndAlign#0;n#!!block;n#calculate#0;n#!!block;n#RadixCalculator#0" expanded="false" />
+            <element signature="n#!!block;n#getProduct#0;n#!!block;n#calculate#0;n#!!block;n#RadixCalculator#0" expanded="false" />
           </folding>
         </state>
       </provider>
