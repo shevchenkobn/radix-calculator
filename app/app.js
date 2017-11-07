@@ -80,7 +80,7 @@ function RadixConverter() {
         throw new TypeError('Wrong input format');
       }
       num = (num + '').toUpperCase();
-      var pointIndex = num.indexOf('.'),
+      var pointIndex = num.indexOf(delimiter),
         power = pointIndex < 0 ? num.length - 1 : pointIndex - 1;
       if (num[0] === '-') {
         power--;
@@ -97,7 +97,7 @@ function RadixConverter() {
       pointIndex = result.indexOf(delimiter);
       if (pointIndex < 0 && fractionLimit > 0) {
         pointIndex = result.length + 1;
-        result += '.';
+        result += delimiter;
       } else {
         pointIndex++;
       }
@@ -133,7 +133,7 @@ function RadixConverter() {
       }
       var intLength = tokens.length;
       if (fractionLimit > 0 || fraction > 0) {
-        tokens.push('.');
+        tokens.push(delimiter);
       }
       if (fraction > 0)
       {
@@ -308,11 +308,16 @@ function RadixCalculator(id, delimiter) {
       fillRow(args[i], i);
     }
   }
-  function fillRow(arg, i, offset) {
-    if (typeof offset === 'undefined') {
-      offset = 0;
+  // we can not start from the first cell in the row
+  function fillRow(arg, i, limit) {
+    if (typeof limit === 'undefined') {
+      limit = cells[0].length - 1;
+    } else if (limit <= 0) {
+      limit = cells[0].length - limit - 1;
+    } else {
+      limit += getCellsNumber(arg) - 1;
     }
-    for (var j = arg.length - 1, c = cells[0].length - offset;
+    for (var j = arg.length - 1, c = limit;
          j >= 0; j--, c--) {
       if (arg[j] !== delimiter) {
         cells[i][c].append(arg[j]);
@@ -354,7 +359,7 @@ function RadixCalculator(id, delimiter) {
       if (!converter.isValidNumber(args[i], radix)) {
         throw new TypeError('Argument ' + args[i] + ' is invalid');
       }
-      args[i] = args[i].split('');
+      args[i] = args[i].split();
     }
     var result;
     switch (action) {
@@ -397,18 +402,26 @@ function RadixCalculator(id, delimiter) {
           [1, multipliersLength]);
         i = 0;
         for (var r = args.length; i < product.tempCalculations.length; i++, r++) {
-          fillRow(args[i], r, i);
+          fillRow(args[i], r, -i);
         }
         putResultAndUnderscore(product.product);
         result = product.product;
         break;
       case calculateEnum.DIVIDE:
         var quotient = getQuotient(args, radix);
+        rows = quotient.tempCalculation.length + 1;
+        var dividendLength = getCellsNumber(args[0]);
+        var remainingLength = Math.max(getCellsNumber(args[1]),
+          getCellsNumber(quotient.quotient)) - 1;
+        columns = dividendLength + remainingLength;
+        underscore(underscore.enum.LEFT, [0, dividendLength], [2, 1]);
+        underscore(underscore.enum.BOTTOM, [0, dividendLength], [1, remainingLength]);
+        fillRow(arg[0], 0, 1);
         
-        result = quotient;
+        result = quotient.quotient;
         break;
     }
-    return result;
+    return result.join('');
     function getSum(args, radix, isTrusted) {
       if (!isTrusted) {
         validateAndAlign(args);
@@ -425,13 +438,13 @@ function RadixCalculator(id, delimiter) {
           var result = sum[r] +
             converter.toDecimal(args[i][j]) + transitional;
           sum[r] = result % radix;
-          transitional = parseInt((result - sum[r]) / radix);
+          transitional = ~~((result - sum[r]) / radix);
         }
         if (transitional) {
           while (transitional && r >= 0) {
             result = sum[r] + transitional;
             sum[r] = result % radix;
-            transitional = parseInt((result - sum[r]) / radix);
+            transitional = ~~((result - sum[r]) / radix);
           }
           if (r < 0) {
             sum.unshift(transitional);
@@ -440,31 +453,14 @@ function RadixCalculator(id, delimiter) {
       }
       return sum.map(toArbitrary);
     }
-    function getDifference(args, radix) {
-      validateAndAlign(args);
-      function toDecimalDecoder(cipher) {
-        return converter.isAnyRadixNumber(cipher) ?
-          converter.toDecimal(cipher) : cipher;
+    function getDifference(args, radix, isTrusted) {
+      if (!isTrusted) {
+        validateAndAlign(args);
       }
-      function isFirstLarger(first, second) {
-        if (second.length > first.length) {
-          return false;
-        } else if (second.length < first.length) {
-          return true;
-        } else {
-          for (var i = 0; i < first.length; i++) {
-            if (first[i] > second[i]) {
-              return true;
-            } else if (first[i] < second[i]) {
-              return false;
-            }
-          }
-        }
-      }
-      var difference = args[0].map(toDecimalDecoder);
+      var difference = args[0].map(toDecimal);
       var negativeDifference = false;
       for (var i = 1; i < args.length; i++) {
-        var temp = args[i].map(toDecimalDecoder);
+        var temp = args[i].map(toDecimal);
         negativeDifference = !isFirstLarger(difference, temp);
         if (negativeDifference) {
           var t = temp;
@@ -536,7 +532,7 @@ function RadixCalculator(id, delimiter) {
             converter.toDecimal(args[1]) + transitional;
           var newCipher = result % radix;
           temp.push(converter.toArbitrary(newCipher));
-          transitional = parseInt((result - newCipher) / radix);
+          transitional = ~~((result - newCipher) / radix);
         }
         if (transitional !== 0) {
           temp.push(converter.toArbitrary(transitional));
@@ -574,7 +570,76 @@ function RadixCalculator(id, delimiter) {
       };
     }
     function getQuotient(args, radix) {
-      return 0;
+      if (!+converter(args[1], radix, 10)) {
+        throw new TypeError('Divider mustn\'t be equal to zero');
+      }
+      alignAndEvalForDivision(args);
+      var tempCalculations = [];
+      var quotient = [];
+      var dividend = '', i = 0, remainder, isLess, divider = converter(args[1], radix, 10);
+      while((isLess = !isFirstLarger(dividend, args[1])) && i < args[1].length) {
+        dividend += args[0][i++];
+      }
+      if (isLess) {
+        quotient.push('0');
+        remainder = dividend;
+        tempCalculations.push([dividend, '0', remainder]);
+      } else {
+        dividend = converter(dividend, radix, 10);
+        for (; i < args[0].length; i++) {
+          makeDivisionStep(converter.toDecimal(args[i]));
+        }
+      }
+      if (dividend !== 0) {
+        quotient.push(delimiter);
+        i = divisionLimit;
+        while (dividend !== 0 && i) {
+          makeDivisionStep();
+          i--;
+        }
+      }
+      return {
+        tempCalculation: tempCalculations,
+        quotient: quotient
+      };
+      function makeDivisionStep(additive) {
+        if (typeof additive === 'undefined') {
+          additive = 0;
+        }
+        var result = ~~(dividend / divider);
+        quotient.push(converter.toArbitrary(result));
+        result *= radix;
+        remainder = dividend - result;
+        if (result !== 0) {
+          tempCalculations.push([converter(dividend, 0, radix),
+            converter(result, 0, radix), converter(remainder, 0, radix)]);
+        }
+        dividend = remainder * radix + additive;
+      }
+    }
+    function alignAndEvalForDivision(args) {
+      var fractions = [];
+      var max;
+      for (var i = 0; i < 2; i++) {
+        if (fractions[i][0] === '-') {
+          throw new TypeError('Arguments must be non-negative');
+        }
+        fractions[i] = getFractionLength(args[i]);
+        if (i === 0) {
+          max = fractions[i];
+        } else {
+          max = Math.max(max, fractions[i]);
+        }
+      }
+      var delta;
+      for (i = 0; i < 2; i++) {
+        args[i].splice(-fractions[i] - 1, 1);
+        if ((delta = max - fractions[i]) > 0) {
+          for (var j = 0; j < delta; j++) {
+            args[i].push('0');
+          }
+        }
+      }
     }
     function toArbitrary(cipher) {
       return converter.isAnyRadixNumber(cipher) ?
@@ -588,7 +653,23 @@ function RadixCalculator(id, delimiter) {
       var index = arg.indexOf(delimiter);
       return index >= 0 ? arg.length - 1 - index : 0;
     }
+    function isFirstLarger(first, second) {
+      if (second.length > first.length) {
+        return false;
+      } else if (second.length < first.length) {
+        return true;
+      } else {
+        for (var i = 0; i < first.length; i++) {
+          if (first[i] > second[i]) {
+            return true;
+          } else if (first[i] < second[i]) {
+            return false;
+          }
+        }
+      }
+    }
   }
+  var divisionLimit = 10;
   var calculateEnum = {
     ADD: '+',
     SUBTRACT: '-',
