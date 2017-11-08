@@ -410,14 +410,22 @@ function RadixCalculator(id, delimiter) {
       case calculateEnum.DIVIDE:
         var quotient = getQuotient(args, radix);
         rows = quotient.tempCalculation.length + 1;
+        var tempValues = quotient.quotient.tempCalculation;
         var dividendLength = getCellsNumber(args[0]);
-        var remainingLength = Math.max(getCellsNumber(args[1]),
-          getCellsNumber(quotient.quotient)) - 1;
+        var dividerLength = getCellsNumber(args[1]);
+        var quotientLength = getCellsNumber(quotient.quotient);
+        var remainingLength = Math.max(dividerLength, quotientLength) - 1;
         columns = dividendLength + remainingLength;
         underscore(underscore.enum.LEFT, [0, dividendLength], [2, 1]);
         underscore(underscore.enum.BOTTOM, [0, dividendLength], [1, remainingLength]);
-        fillRow(arg[0], 0, 1);
-        
+        fillRow(args[0], 0, -(columns - 1));
+        fillRow(args[1], 0, dividerLength - remainingLength + 1);
+        fillRow(quotient.quotient, 0, quotientLength - remainingLength + 1);
+        fillRow(tempValues[0][1], 1, columns - remainingLength -
+          (args[0].length - tempValues[0][0].length));
+        for (i = 1, r = 0; i < tempValues.length; i++, r++) {
+
+        }
         result = quotient.quotient;
         break;
     }

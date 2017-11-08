@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0850fda0-11ae-496f-878c-cf575d96dc89" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.js" afterPath="$PROJECT_DIR$/app/app.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -30,8 +29,8 @@
       <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="418" column="30" lean-forward="false" selection-start-line="418" selection-start-column="30" selection-end-line="418" selection-end-column="30" />
+            <state relative-caret-position="303">
+              <caret line="424" column="54" lean-forward="true" selection-start-line="423" selection-start-column="8" selection-end-line="424" selection-end-column="54" />
               <folding>
                 <element signature="n#!!block;n#getSum#0;n#!!block;n#calculate#0;n#!!block;n#RadixCalculator#0" expanded="false" />
                 <element signature="n#!!block;n#getDifference#0;n#!!block;n#calculate#0;n#!!block;n#RadixCalculator#0" expanded="false" />
@@ -94,6 +93,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -131,7 +131,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
   </component>
@@ -181,17 +180,18 @@
       <workItem from="1509899224682" duration="5592000" />
       <workItem from="1509985702792" duration="13084000" />
       <workItem from="1510032756357" duration="7804000" />
+      <workItem from="1510056989038" duration="1578000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="62616000" />
+    <option name="totallyTimeSpent" value="64194000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1376" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24963397" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -222,6 +222,27 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="27" lean-forward="false" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7106">
+          <caret line="418" column="30" lean-forward="false" selection-start-line="418" selection-start-column="30" selection-end-line="418" selection-end-column="30" />
+          <folding>
+            <element signature="n#!!block;n#getSum#0;n#!!block;n#calculate#0;n#!!block;n#RadixCalculator#0" expanded="false" />
+            <element signature="n#!!block;n#getDifference#0;n#!!block;n#calculate#0;n#!!block;n#RadixCalculator#0" expanded="false" />
+            <element signature="n#!!block;n#validateAndAlign#0;n#!!block;n#calculate#0;n#!!block;n#RadixCalculator#0" expanded="false" />
+            <element signature="n#!!block;n#getProduct#0;n#!!block;n#calculate#0;n#!!block;n#RadixCalculator#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
@@ -379,8 +400,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="418" column="30" lean-forward="false" selection-start-line="418" selection-start-column="30" selection-end-line="418" selection-end-column="30" />
+        <state relative-caret-position="303">
+          <caret line="424" column="54" lean-forward="true" selection-start-line="423" selection-start-column="8" selection-end-line="424" selection-end-column="54" />
           <folding>
             <element signature="n#!!block;n#getSum#0;n#!!block;n#calculate#0;n#!!block;n#RadixCalculator#0" expanded="false" />
             <element signature="n#!!block;n#getDifference#0;n#!!block;n#calculate#0;n#!!block;n#RadixCalculator#0" expanded="false" />
