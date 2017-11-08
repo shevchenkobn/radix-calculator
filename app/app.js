@@ -760,14 +760,6 @@
         calculate: getPropDescriptor(calculate, true),
         actionEnum: getPropDescriptor(calculateEnum)
       });
-    calculate.clearOutput = function() {
-      container.empty();
-    };
-    calculate.getConverter = function() {
-      return new RadixConverter();
-    };
-    calculate.actionEnum = calculateEnum;
-    calculate.calculate = calculate;
     Object.seal(calculate);
     return calculate;
   }
@@ -776,24 +768,53 @@
     RadixCalculator: getPropDescriptor(RadixCalculator)
   });
 })();
-var calculator = RadixCalculator('output');
 
 angular.module('radix-converter', [])
   .controller('mainController', function($scope) {
-    $scope.dec = 0;
-    $scope.hex = 0;
-    $scope.oct = 0;
-    $scope.bin = 0;
+    $scope.radixInfo = {
+      10: 'Decimal',
+      2: 'Binary',
+      8: 'Octal',
+      16: 'Hexadecimal'
+    };
+    var watchers = {};
+    var values = {
+      2: 0,
+      8: 0,
+      10: 0,
+      16: 0
+    };
+    $scope.values = values;
+    Object.defineProperties(watchers, {
+      register: {
+        value: function (inputRadix) {
+          for (var radix in this) {
+            if (this.hasOwnProperty(radix) && typeof this[radix] === 'function') {
+              this[radix](); // unregister all watchers
+            }
+          }
+          var watcher = function(newValue, oldValue, scope) {
+            for (var radix in values) {
+              if (values.hasOwnProperty(radix) && inputRadix != radix) {
+                values[radix] = convert(newValue, inputRadix, radix);
+              }
+            }
+          }.bind(this);
+          this[inputRadix] = $scope.$watch('values[' + inputRadix + ']', watcher);
+        }.bind(watchers)
+      }
+    });
+    $scope.switchRadix = watchers.register;
     // $scope.$watch('dec', function(newValue, oldValue, scope) {
     //   $scope.hex = convert(newValue, 10, 16);
     //   $scope.oct = convert(newValue, 10, 8);
     //   $scope.bin = convert(newValue, 10, 2);
     // });
-    $scope.$watch('hex', function(newValue, oldValue, scope) {
-      $scope.dec = convert(newValue, 16, 10);
-      $scope.oct = convert(newValue, 16, 8);
-      $scope.bin = convert(newValue, 16, 2);
-    });
+    // $scope.$watch('hex', function(newValue, oldValue, scope) {
+    //   $scope.dec = convert(newValue, 16, 10);
+    //   $scope.oct = convert(newValue, 16, 8);
+    //   $scope.bin = convert(newValue, 16, 2);
+    // });
     // $scope.$watch('oct', function(newValue, oldValue, scope) {
     //   $scope.hex = convert(newValue, 8, 16);
     //   $scope.dec = convert(newValue, 8, 10);
@@ -806,4 +827,5 @@ angular.module('radix-converter', [])
     // });
 
     var convert = new RadixConverter;
+    var calculator = new RadixCalculator('output');
   });

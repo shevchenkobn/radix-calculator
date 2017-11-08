@@ -3,14 +3,18 @@
 </head>
 <body ng-app="radix-converter" ng-controller="mainController">
     <div class="container">
-        <p>Hexadecimal: <input ng-model="hex"></p>
-        <p>Decimal: <span ng-bind="dec"></span></p>
-        <p>Octal: <span ng-bind="oct"></span></p>
-        <p>Binary: <span ng-bind="bin"></span></p>
+        <p ng-repeat="(radix, msg) in radixInfo">{{msg}}:
+            <input ng-focus="switchRadix(radix)"
+                   ng-model="values[radix]">
+        </p>
     </div>
+    <form name="calc">
+        <div class="arguments">
+        </div>
+    </form>
     <div id="output"></div>
-    <script src="./node_modules/angular/angular.js"></script>
     <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="./node_modules/angular/angular.js"></script>
     <script src="./app/app.js"></script>
 </body>
 </html>
