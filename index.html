@@ -1,20 +1,48 @@
 <html>
 <head>
 </head>
-<body ng-app="radix-converter" ng-controller="mainController">
-    <div class="container">
-        <p ng-repeat="(radix, msg) in radixInfo">{{msg}}:
+<body ng-app="radix-calculator">
+<div class="container" ng-controller="converter">
+    <h1>Converter</h1>
+    <div ng-repeat="(radix, msg) in radixInfo">
+        <label>{{msg}}:
             <input ng-focus="switchRadix(radix)"
                    ng-model="values[radix]">
-        </p>
+        </label>
     </div>
-    <form name="calc">
-        <div class="arguments">
+</div>
+<div ng-controller="calculator as calc">
+    <h1>Calculator</h1>
+    <div>
+        <label>
+            Radix:
+            <input type="number" min="2" max="36" ng-model="radix">
+        </label>
+    </div>
+    <div>
+        <h2>Actions</h2>
+        <div ng-repeat="(PROP, value) in actions">
+            <label>
+                {{PROP}}: <input type="radio"
+                                 ng-model="$parent.action"
+                                 name="action"
+                                 ng-value="value">
+            </label>
         </div>
-    </form>
+    </div>
+    <div class="container">
+        <h2>Arguments</h2>
+        <input ng-repeat="(index, value) in args" ng-model="args[index]">
+    </div>
+    <div>
+        <button ng-hide="args.count <= 2" class="sqr-btn" ng-click="removeArg()">-</button>
+        <button class="sqr-btn" ng-click="addArg()">+</button>
+        <button ng-click="calculate()">Calculate</button>
+    </div>
     <div id="output"></div>
-    <script src="./node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="./node_modules/angular/angular.js"></script>
-    <script src="./app/app.js"></script>
+</div>
+<script src="./node_modules/jquery/dist/jquery.min.js"></script>
+<script src="./node_modules/angular/angular.js"></script>
+<script src="./app/app.js"></script>
 </body>
 </html>

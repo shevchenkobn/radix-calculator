@@ -769,8 +769,8 @@
   });
 })();
 
-angular.module('radix-converter', [])
-  .controller('mainController', function($scope) {
+angular.module('radix-calculator', [])
+  .controller('converter', function($scope) {
     $scope.radixInfo = {
       10: 'Decimal',
       2: 'Binary',
@@ -785,6 +785,8 @@ angular.module('radix-converter', [])
       16: 0
     };
     $scope.values = values;
+  
+    var convert = new RadixConverter;
     Object.defineProperties(watchers, {
       register: {
         value: function (inputRadix) {
@@ -805,27 +807,57 @@ angular.module('radix-converter', [])
       }
     });
     $scope.switchRadix = watchers.register;
-    // $scope.$watch('dec', function(newValue, oldValue, scope) {
-    //   $scope.hex = convert(newValue, 10, 16);
-    //   $scope.oct = convert(newValue, 10, 8);
-    //   $scope.bin = convert(newValue, 10, 2);
-    // });
-    // $scope.$watch('hex', function(newValue, oldValue, scope) {
-    //   $scope.dec = convert(newValue, 16, 10);
-    //   $scope.oct = convert(newValue, 16, 8);
-    //   $scope.bin = convert(newValue, 16, 2);
-    // });
-    // $scope.$watch('oct', function(newValue, oldValue, scope) {
-    //   $scope.hex = convert(newValue, 8, 16);
-    //   $scope.dec = convert(newValue, 8, 10);
-    //   $scope.bin = convert(newValue, 8, 2);
-    // });
-    // $scope.$watch('bin', function(newValue, oldValue, scope) {
-    //   $scope.hex = convert(newValue, 2, 16);
-    //   $scope.oct = convert(newValue, 2, 8);
-    //   $scope.dec = convert(newValue, 2, 10);
-    // });
-
-    var convert = new RadixConverter;
+  }).controller('calculator', function($scope) {
     var calculator = new RadixCalculator('output');
+    function Args(count) {
+      for (var i = 0; i < count; i++) {
+        this[i] = 0;
+      }
+    }
+    Args.prototype = Object.create(Object.prototype, {
+      toArray: {
+        value: function () {
+          var arr = [];
+          for (var prop in this) {
+            if (this.hasOwnProperty(prop)) {
+              arr[+prop] = this[prop];
+            }
+          }
+          return arr;
+        }
+      },
+      count: {
+        get: function() {
+          var count = 0;
+          for (var prop in this) {
+            if (this.hasOwnProperty(prop)) {
+              count++;
+            }
+          }
+          return count;
+        }
+      }
+    });
+    var args = new Args(2);
+    $scope.radix = 10;
+    $scope.actions = calculator.actionEnum;
+    $scope.action = $scope.actions.ADD;
+    $scope.args = args;
+    $scope.calculate = function() {
+      try {
+        $scope.result = calculator($scope.action, $scope.args.toArray(), $scope.radix);
+        $scope.$apply();
+      } catch (e) {
+        alert(e.message);
+      }
+    };
+    $scope.addArg = function() {
+      args[args.count] = 0;
+    };
+    $scope.removeArg = function() {
+      var count = args.count;
+      if (count > 2) {
+        delete args[count - 1];
+      }
+    };
   });
