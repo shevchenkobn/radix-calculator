@@ -11,7 +11,7 @@
         </label>
     </div>
 </div>
-<div ng-controller="calculator as calc">
+<div ng-controller="calculator">
     <h1>Calculator</h1>
     <div>
         <label>
@@ -39,6 +39,7 @@
         <button class="sqr-btn" ng-click="addArg()">+</button>
         <button ng-click="calculate()">Calculate</button>
     </div>
+    <div>Result: <span ng-bind="result"></span></div>
     <div id="output"></div>
 </div>
 <script src="./node_modules/jquery/dist/jquery.min.js"></script>

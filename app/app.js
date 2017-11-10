@@ -163,10 +163,6 @@
       }
     }
     
-    convert.convert = convert;
-    convert.toArbitrary = toArbitrary;
-    convert.toDecimal = toDecimal;
-    convert.isAnyRadixNumber = isAnyRadixCypher;
     Object.defineProperties(convert, {
       fractionLimit: {
         get: function() {
@@ -196,8 +192,12 @@
           crop = !!fill;
         }
       },
-      isValidNumber: isValidNumber,
-      isValidRadix: isValidRadix
+      convert: getPropDescriptor(convert),
+      toDecimal: getPropDescriptor(toDecimal),
+      toArbitrary: getPropDescriptor(toArbitrary),
+      isAnyRadixNumber: getPropDescriptor(isAnyRadixCypher),
+      isValidNumber: getPropDescriptor(isValidNumber),
+      isValidRadix: getPropDescriptor(isValidRadix)
     });
     Object.seal(convert);
     return convert;
@@ -246,7 +246,7 @@
       position: 'absolute',
       height: '100%',
       top: '0.1rem',
-      left: '0.8rem',
+      right: '0.8rem',
       'font-weight': '900',
       'font-size': '1.2rem',
       'z-index': 999,
@@ -272,7 +272,7 @@
         var row = $('<tr>').appendTo(table);
         cells[i] = [];
         for (var j = 0; j < columns; j++) {
-          cells[i][j] = $('<td>1</td>').appendTo(row)
+          cells[i][j] = $('<td>').appendTo(row)
             .css(tdStyle);
         }
       }
@@ -354,14 +354,14 @@
       fillRowInv(result, cells.length - 1);
       underscore(underscore.enum.TOP,
         [cells.length - 1, 1],
-        [1, getCellsNumber(result)]);
+        [1, getCellsNumber(result) - 1]);
     }
     function putSign(sign, row, col) {
-      if (!row) {
+      if (!row || row < 0) {
         row = 0;
       }
-      if (!col) {
-        col = 1;
+      if (!col || col < 0) {
+        col = 0;
       }
       cells[row][col].append($('<span>' + sign + '</span>')
         .css(signStyle));
@@ -377,12 +377,12 @@
       if (args.length < 2) {
         throw new TypeError('Not enough arguments for operation');
       }
-      for (var i = 0; i < args.length; i++) {
-        if (!converter.isValidNumber(args[i], radix)) {
-          throw new TypeError('Argument ' + args[i] + ' is invalid');
+      args = args.map(function(arg) {
+        if (!converter.isValidNumber(arg, radix)) {
+          throw new TypeError('Argument ' + arg + ' is invalid');
         }
-        args[i] = args[i].split();
-      }
+        return (arg + '').split('');
+      });
       var result;
       switch (action) {
         case calculateEnum.ADD:
@@ -391,20 +391,20 @@
           var columns = getCellsNumber(sum);
           buildTable(rows, columns);
           fillRowsFromTop(args);
-          putSign('+', 0, columns - getCellsNumber(args[0]) - 1);
+          putSign('+', 0, columns - getCellsNumber(args[0]));
           putResultAndUnderscore(sum);
           result = sum;
           break;
         case calculateEnum.SUBTRACT:
           var difference = getDifference(args, radix);
           rows = args.length + 1;
-          var index = difference.indexOf(delimiter);
-          columns = args.reduce(function(prev, curr) {
-              return Math.max(prev, index >= 0 ? curr.length - 1 - index : 0);
-            });
+          var argsMaxLength = args.reduce(function(prev, curr) {
+            return Math.max(prev, getCellsNumber(curr));
+          }, 0);
+          columns = Math.max(argsMaxLength, getCellsNumber(difference));
           buildTable(rows, columns);
           fillRowsFromTop(args);
-          putSign('-');
+          putSign('-', 0, columns - argsMaxLength);
           putResultAndUnderscore(difference);
           result = difference;
           break;
@@ -491,7 +491,7 @@
         var sum = args[0].map(toDecimal);
         for (var i = 1; i < args.length; i++) {
           var transitional = 0;
-          for (var j = args[i].length - 1, r = sum.length;
+          for (var j = args[i].length - 1, r = sum.length - 1;
                j >= 0; j--, r--) {
             if (!converter.isAnyRadixNumber(args[i][j])) {
               continue;
@@ -506,8 +506,9 @@
               result = sum[r] + transitional;
               sum[r] = result % radix;
               transitional = ~~((result - sum[r]) / radix);
+              r--;
             }
-            if (r < 0) {
+            if (r < 0 && transitional) {
               sum.unshift(transitional);
             }
           }
@@ -528,19 +529,23 @@
             temp = difference;
             difference = t;
           }
-          for (var j = temp.length - 1, d = difference.length;
-               j >= 0 && d >= 0; j--, d--) {
+          for (var j = temp.length - 1, d = difference.length - 1;
+               j >= 0; j--, d--) {
             if (!converter.isAnyRadixNumber(temp[j])) {
               continue;
             }
-            var result = difference[d] - temp[j];
-            if (result < 0 && d !== 0) {
+            difference[d] -= temp[j];
+            if (difference[d] < 0 && d !== 0) {
               for (var k = d; k > 0 && difference[k] <= 0; k--) {
+                if (!converter.isAnyRadixNumber(temp[j])) {
+                  continue;
+                }
                 difference[k] += radix;
               }
               difference[k]--;
             }
           }
+          difference = removeLeadingZeros(difference);
           if (negativeDifference) {
             negativeDifference = true;
             temp = [difference.map(toArbitrary)].concat(args.slice(i + 1));
@@ -561,20 +566,35 @@
           }
           return Math.max(prev, getFractionLength(curr));
         }, 0);
-        if (maxFractionLength > 0) {
-          for (var i = 0; i < args.length; i++) {
-            var index = args[i].indexOf(delimiter);
-            var zerosNumber = maxFractionLength - getFractionLength(args[i]);
+        for (var i = 0; i < args.length; i++) {
+          var index = args[i].indexOf(delimiter);
+          args[i] = removeLeadingZeros(args[i], index);
+          if (maxFractionLength > 0) {
             if (index < 0) {
               args[i].push(delimiter);
             } else if (index === 0) {
               args[i].unshift('0');
             }
+            var zerosNumber = maxFractionLength - getFractionLength(args[i]);
             for (var j = 0; j < zerosNumber; j++) {
               args[i].push('0');
             }
           }
         }
+      }
+      function removeLeadingZeros(arg, index) {
+        if (typeof index === "undefined") {
+          index = arg.indexOf(delimiter);
+        }
+        var lastZeroIndex = -1;
+        for (var i = 0, maxLeadingZeros = (index < 0 ?
+          arg.length : index) - 1;
+             i < maxLeadingZeros && +arg[i] === 0;
+             i++, lastZeroIndex++) {}
+        if (lastZeroIndex >= 0) {
+          arg = arg.slice(lastZeroIndex + 1);
+        }
+        return arg;
       }
       function getProduct(args, radix) {
         var tempCalculations = [],
@@ -841,15 +861,10 @@ angular.module('radix-calculator', [])
     var args = new Args(2);
     $scope.radix = 10;
     $scope.actions = calculator.actionEnum;
-    $scope.action = $scope.actions.ADD;
+    $scope.action = $scope.actions.SUBTRACT;
     $scope.args = args;
     $scope.calculate = function() {
-      try {
-        $scope.result = calculator($scope.action, $scope.args.toArray(), $scope.radix);
-        $scope.$apply();
-      } catch (e) {
-        alert(e.message);
-      }
+      $scope.result = calculator($scope.action, $scope.radix, $scope.args.toArray());
     };
     $scope.addArg = function() {
       args[args.count] = 0;
