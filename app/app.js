@@ -282,6 +282,10 @@
       }
       return cells;
     }
+    function putMessage(msg) {
+      container.empty();
+      $('<h3>' + msg + '</h3>').appendTo(container);
+    }
     // startArray = [row, column], lengthArray = [rowLength, columnLength]
     function underscore(borderPieces, startArray, lengthArray) {
       for (var i = startArray[0]; i < startArray[0] + lengthArray[0]; i++) {
@@ -384,7 +388,7 @@
       }
     }
     updateDelimiter(delimiter);
-    function calculate(action, radix, args) {
+    function calculateAndDisplay(action, radix, args) {
       if (args.length < 2) {
         throw new TypeError('Not enough arguments for operation');
       }
@@ -488,7 +492,7 @@
             underscore(underscore.enum.BOTTOM, [1, 1], [1,
               tempValues[0][0].length +
               (+tempValues[0][2] === 0 &&
-                dividendLength !== tempLength ? 1 : 0) +
+              dividendLength !== tempLength ? 1 : 0) +
               (tempValues.length > 1 ?
                 tempValues[1][0].length - tempValues[0][2].length : 0)]);
             // for tempValues getCellsNumber is
@@ -500,8 +504,8 @@
               putSign('-', r, offset - 1);
               if (i !== tempValues.length - 1) {
                 underscore(underscore.enum.BOTTOM, [r + 1, offset], [1, tempLength +
-                  tempValues[i + 1][0].length - tempValues[i][2].length +
-                  (+tempValues[0][2] === 0 ? 1 : 0)]);
+                tempValues[i + 1][0].length - tempValues[i][2].length +
+                (+tempValues[0][2] === 0 ? 1 : 0)]);
                 if (+tempValues[i + 1][0] === 0) {
                   offset += tempValues[0][1].length;
                 } else if (tempValues[i][0].length > tempValues[i][2].length) {
@@ -579,8 +583,8 @@
             var notCypher = false;
             if (difference[d] < 0 && d !== 0) {
               for (var k = d; k > 0 &&
-                   (difference[k] <= 0 ||
-                     (notCypher = !converter.isAnyRadixCypher(difference[k])));
+              (difference[k] <= 0 ||
+                (notCypher = !converter.isAnyRadixCypher(difference[k])));
                    k--) {
                 if (!notCypher) {
                   difference[k] += radix;
@@ -831,6 +835,15 @@
           converter(arg, from, to);
       }
     }
+    function safeCalculate(action, radix, args) {
+      try {
+        return calculateAndDisplay(action, radix, args);
+      } catch (ex) {
+        putMessage(ex.message);
+        console.error(ex);
+        return NaN;
+      }
+    }
     var fractionLimit = 10;
     var calculateEnum = {};
     Object.defineProperties(calculateEnum, {
@@ -840,7 +853,7 @@
       DIVIDE: getPropDescriptor('/')
     });
     Object.seal(calculateEnum);
-    Object.defineProperties(calculate, {
+    Object.defineProperties(safeCalculate, {
         fractionLimit: {
           get: function () {
             return fractionLimit;
@@ -869,11 +882,11 @@
         getConverterInstance: getPropDescriptor(function() {
           return new RadixConverter();
         }, true),
-        calculate: getPropDescriptor(calculate, true),
+        calculate: getPropDescriptor(safeCalculate, true),
         actionEnum: getPropDescriptor(calculateEnum)
       });
-    Object.seal(calculate);
-    return calculate;
+    Object.seal(safeCalculate);
+    return safeCalculate;
   }
   Object.defineProperties(window, {
     RadixConverter: getPropDescriptor(RadixConverter),
