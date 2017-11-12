@@ -2,7 +2,139 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0850fda0-11ae-496f-878c-cf575d96dc89" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.js" afterPath="$PROJECT_DIR$/app/app.js" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/AUTHORS.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/LICENSE.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/README.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/bower.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/dist/core.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/dist/jquery.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/dist/jquery.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/dist/jquery.min.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/dist/jquery.slim.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/dist/jquery.slim.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/dist/jquery.slim.min.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/external/sizzle/LICENSE.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/external/sizzle/dist/sizzle.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/external/sizzle/dist/sizzle.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/external/sizzle/dist/sizzle.min.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/package.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/.eslintrc.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/ajax.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/ajax/jsonp.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/ajax/load.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/ajax/parseXML.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/ajax/script.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/ajax/var/location.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/ajax/var/nonce.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/ajax/var/rquery.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/ajax/xhr.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/attributes.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/attributes/attr.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/attributes/classes.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/attributes/prop.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/attributes/support.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/attributes/val.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/callbacks.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/core.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/core/DOMEval.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/core/access.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/core/init.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/core/nodeName.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/core/parseHTML.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/core/ready-no-deferred.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/core/ready.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/core/readyException.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/core/stripAndCollapse.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/core/support.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/core/var/rsingleTag.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/css.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/css/addGetHookIf.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/css/adjustCSS.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/css/curCSS.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/css/hiddenVisibleSelectors.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/css/showHide.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/css/support.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/css/var/cssExpand.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/css/var/getStyles.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/css/var/isHiddenWithinTree.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/css/var/rmargin.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/css/var/rnumnonpx.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/css/var/swap.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/data.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/data/Data.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/data/var/acceptData.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/data/var/dataPriv.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/data/var/dataUser.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/deferred.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/deferred/exceptionHook.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/deprecated.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/dimensions.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/effects.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/effects/Tween.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/effects/animatedSelector.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/event.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/event/ajax.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/event/alias.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/event/focusin.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/event/support.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/event/trigger.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/exports/amd.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/exports/global.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/jquery.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/manipulation.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/manipulation/_evalUrl.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/manipulation/buildFragment.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/manipulation/getAll.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/manipulation/setGlobalEval.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/manipulation/support.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/manipulation/var/rcheckableType.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/manipulation/var/rscriptType.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/manipulation/var/rtagName.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/manipulation/wrapMap.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/offset.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/queue.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/queue/delay.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/selector-native.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/selector-sizzle.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/selector.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/serialize.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/traversing.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/traversing/findFilter.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/traversing/var/dir.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/traversing/var/rneedsContext.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/traversing/var/siblings.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/var/ObjectFunctionString.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/var/arr.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/var/class2type.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/var/concat.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/var/document.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/var/documentElement.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/var/fnToString.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/var/getProto.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/var/hasOwn.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/var/indexOf.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/var/pnum.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/var/push.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/var/rcssNum.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/var/rnothtmlwhite.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/var/slice.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/var/support.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/var/toString.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/demo/node_modules/jquery/src/wrap.js" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/app/app.js" afterPath="$PROJECT_DIR$/demo/app/app.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/demo/index.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/node_modules/angular/LICENSE.md" afterPath="$PROJECT_DIR$/demo/node_modules/angular/LICENSE.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/node_modules/angular/README.md" afterPath="$PROJECT_DIR$/demo/node_modules/angular/README.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/node_modules/angular/angular-csp.css" afterPath="$PROJECT_DIR$/demo/node_modules/angular/angular-csp.css" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/node_modules/angular/angular.js" afterPath="$PROJECT_DIR$/demo/node_modules/angular/angular.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/node_modules/angular/angular.min.js" afterPath="$PROJECT_DIR$/demo/node_modules/angular/angular.min.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/node_modules/angular/angular.min.js.gzip" afterPath="$PROJECT_DIR$/demo/node_modules/angular/angular.min.js.gzip" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/node_modules/angular/angular.min.js.map" afterPath="$PROJECT_DIR$/demo/node_modules/angular/angular.min.js.map" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/node_modules/angular/bower.json" afterPath="$PROJECT_DIR$/demo/node_modules/angular/bower.json" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/node_modules/angular/index.js" afterPath="$PROJECT_DIR$/demo/node_modules/angular/index.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/node_modules/angular/package.json" afterPath="$PROJECT_DIR$/demo/node_modules/angular/package.json" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/package-lock.json" afterPath="$PROJECT_DIR$/demo/package-lock.json" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -16,56 +148,38 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/index.html">
+      <file leaf-file-name="radix-calculator.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/radix-calculator.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="16" column="11" lean-forward="false" selection-start-line="16" selection-start-column="11" selection-end-line="16" selection-end-column="11" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/app.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-30">
-              <caret line="842" column="26" lean-forward="false" selection-start-line="842" selection-start-column="26" selection-end-line="842" selection-end-column="26" />
+            <state relative-caret-position="153">
+              <caret line="33" column="32" lean-forward="false" selection-start-line="33" selection-start-column="32" selection-end-line="33" selection-end-column="32" />
               <folding>
-                <element signature="e#11919#12319#0" expanded="false" />
-                <element signature="e#12372#12731#0" expanded="false" />
-                <element signature="e#12740#13298#0" expanded="false" />
-                <element signature="e#13307#14593#0" expanded="false" />
-                <element signature="e#17898#18972#0" expanded="false" />
-                <element signature="e#19026#20604#0" expanded="false" />
-                <element signature="e#20643#21329#0" expanded="false" />
-                <element signature="e#21376#21802#0" expanded="false" />
-                <element signature="e#21848#22367#0" expanded="false" />
-                <element signature="e#22407#24614#0" expanded="false" />
-                <element signature="e#24655#26316#0" expanded="false" />
-                <element signature="e#26362#27130#0" expanded="false" />
-                <element signature="e#27166#27277#0" expanded="false" />
-                <element signature="e#27311#27420#0" expanded="false" />
-                <element signature="e#27459#27568#0" expanded="false" />
-                <element signature="e#28092#28295#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="jquery.min.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/node_modules/jquery/dist/jquery.min.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
+                <element signature="e#11921#12321#0" expanded="false" />
+                <element signature="e#17900#18974#0" expanded="false" />
+                <element signature="e#19028#20606#0" expanded="false" />
+                <element signature="e#20645#21331#0" expanded="false" />
+                <element signature="e#21378#21804#0" expanded="false" />
+                <element signature="e#21850#22369#0" expanded="false" />
+                <element signature="e#22409#24616#0" expanded="false" />
+                <element signature="e#24657#26318#0" expanded="false" />
+                <element signature="e#26364#27132#0" expanded="false" />
+                <element signature="e#27168#27279#0" expanded="false" />
+                <element signature="e#27313#27422#0" expanded="false" />
+                <element signature="e#27461#27570#0" expanded="false" />
+                <element signature="e#28094#28297#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
     </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -87,6 +201,11 @@
       <list>
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/app/app.js" />
+        <option value="$PROJECT_DIR$/build/radix-calculator.js" />
+        <option value="$PROJECT_DIR$/dist/radix-calculator.bundle.min.js" />
+        <option value="$PROJECT_DIR$/demo/app/app.js" />
+        <option value="$PROJECT_DIR$/demo/index.html" />
+        <option value="$PROJECT_DIR$/build/package.json" />
       </list>
     </option>
   </component>
@@ -97,9 +216,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="NodeModulesDirectoryManager">
-    <handled-path value="$PROJECT_DIR$/node_modules" />
+    <handled-path value="$PROJECT_DIR$/build/node_modules" />
+    <handled-path value="$PROJECT_DIR$/demo/node_modules" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-7" />
     <option name="width" value="694" />
     <option name="height" value="735" />
@@ -131,28 +251,28 @@
             <path>
               <item name="radix-converter" type="b2602c69:ProjectViewProjectNode" />
               <item name="radix-converter" type="462c0819:PsiDirectoryNode" />
+              <item name="build" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="radix-converter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="radix-converter" type="462c0819:PsiDirectoryNode" />
+              <item name="build" type="462c0819:PsiDirectoryNode" />
               <item name="node_modules" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="radix-converter" type="b2602c69:ProjectViewProjectNode" />
               <item name="radix-converter" type="462c0819:PsiDirectoryNode" />
-              <item name="node_modules" type="462c0819:PsiDirectoryNode" />
-              <item name="jquery" type="462c0819:PsiDirectoryNode" />
+              <item name="demo" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="radix-converter" type="b2602c69:ProjectViewProjectNode" />
               <item name="radix-converter" type="462c0819:PsiDirectoryNode" />
-              <item name="node_modules" type="462c0819:PsiDirectoryNode" />
-              <item name="jquery" type="462c0819:PsiDirectoryNode" />
               <item name="dist" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="radix-converter" type="b2602c69:ProjectViewProjectNode" />
               <item name="radix-converter" type="462c0819:PsiDirectoryNode" />
-              <item name="node_modules" type="462c0819:PsiDirectoryNode" />
-              <item name="jquery" type="462c0819:PsiDirectoryNode" />
-              <item name="dist" type="462c0819:PsiDirectoryNode" />
-              <item name="jquery.js" type="620a8d5e:NestingTreeNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -165,6 +285,16 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="nodejs_interpreter_path" value="C:/Program Files/nodejs/node" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\myStuff\NURE\акокм\radix-converter\src" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\myStuff\NURE\акокм\radix-converter" />
+      <recent name="D:\myStuff\NURE\акокм\radix-converter\build\src" />
+      <recent name="D:\myStuff\NURE\акокм\radix-converter\demo" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -179,7 +309,7 @@
     </option>
   </component>
   <component name="RunManager" selected="Node.js.app.js">
-    <configuration name="app.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-node="project" path-to-js-file="app.js" working-dir="$PROJECT_DIR$/app" />
+    <configuration name="app.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-node="project" path-to-js-file="$PROJECT_DIR$/demo/app/app.js" working-dir="$PROJECT_DIR$/demo/app" />
     <recent_temporary>
       <list size="1">
         <item index="0" class="java.lang.String" itemvalue="Node.js.app.js" />
@@ -211,15 +341,15 @@
       <workItem from="1510118699204" duration="6726000" />
       <workItem from="1510130280864" duration="4138000" />
       <workItem from="1510207964043" duration="2426000" />
-      <workItem from="1510324695354" duration="42263000" />
+      <workItem from="1510324695354" duration="47121000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="118372000" />
+    <option name="totallyTimeSpent" value="123230000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1376" height="744" extended-state="7" />
+    <frame x="-8" y="-8" width="1376" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -253,7 +383,7 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/index.html">
+    <entry file="file://$PROJECT_DIR$/demo/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="12" column="25" lean-forward="false" selection-start-line="12" selection-start-column="25" selection-end-line="12" selection-end-column="25" />
@@ -261,32 +391,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/app.js">
+    <entry file="file://$PROJECT_DIR$/demo/app/app.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="13855">
           <caret line="815" column="35" lean-forward="true" selection-start-line="815" selection-start-column="35" selection-end-line="815" selection-end-column="35" />
-          <folding>
-            <element signature="e#11919#12319#0" expanded="false" />
-            <element signature="e#12372#12731#0" expanded="false" />
-            <element signature="e#12740#13298#0" expanded="false" />
-            <element signature="e#13307#14593#0" expanded="false" />
-            <element signature="e#17898#18972#0" expanded="false" />
-            <element signature="e#19026#20604#0" expanded="false" />
-            <element signature="e#20643#21329#0" expanded="false" />
-            <element signature="e#21376#21802#0" expanded="false" />
-            <element signature="e#21848#22367#0" expanded="false" />
-            <element signature="e#22407#24614#0" expanded="false" />
-            <element signature="e#24655#26316#0" expanded="false" />
-            <element signature="e#26362#27130#0" expanded="false" />
-            <element signature="e#27166#27277#0" expanded="false" />
-            <element signature="e#27311#27420#0" expanded="false" />
-            <element signature="e#27459#27568#0" expanded="false" />
-            <element signature="e#28092#28295#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
+    <entry file="file://$PROJECT_DIR$/demo/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -294,32 +407,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/app.js">
+    <entry file="file://$PROJECT_DIR$/demo/app/app.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="13481">
           <caret line="793" column="13" lean-forward="true" selection-start-line="793" selection-start-column="13" selection-end-line="793" selection-end-column="13" />
-          <folding>
-            <element signature="e#11919#12319#0" expanded="false" />
-            <element signature="e#12372#12731#0" expanded="false" />
-            <element signature="e#12740#13298#0" expanded="false" />
-            <element signature="e#13307#14593#0" expanded="false" />
-            <element signature="e#17898#18972#0" expanded="false" />
-            <element signature="e#19026#20604#0" expanded="false" />
-            <element signature="e#20643#21329#0" expanded="false" />
-            <element signature="e#21376#21802#0" expanded="false" />
-            <element signature="e#21848#22367#0" expanded="false" />
-            <element signature="e#22407#24614#0" expanded="false" />
-            <element signature="e#24655#26316#0" expanded="false" />
-            <element signature="e#26362#27130#0" expanded="false" />
-            <element signature="e#27166#27277#0" expanded="false" />
-            <element signature="e#27311#27420#0" expanded="false" />
-            <element signature="e#27459#27568#0" expanded="false" />
-            <element signature="e#28092#28295#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
+    <entry file="file://$PROJECT_DIR$/demo/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="10" column="27" lean-forward="false" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="27" />
@@ -327,32 +423,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/app.js">
+    <entry file="file://$PROJECT_DIR$/demo/app/app.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="13175">
           <caret line="775" column="54" lean-forward="false" selection-start-line="775" selection-start-column="54" selection-end-line="775" selection-end-column="54" />
-          <folding>
-            <element signature="e#11919#12319#0" expanded="false" />
-            <element signature="e#12372#12731#0" expanded="false" />
-            <element signature="e#12740#13298#0" expanded="false" />
-            <element signature="e#13307#14593#0" expanded="false" />
-            <element signature="e#17898#18972#0" expanded="false" />
-            <element signature="e#19026#20604#0" expanded="false" />
-            <element signature="e#20643#21329#0" expanded="false" />
-            <element signature="e#21376#21802#0" expanded="false" />
-            <element signature="e#21848#22367#0" expanded="false" />
-            <element signature="e#22407#24614#0" expanded="false" />
-            <element signature="e#24655#26316#0" expanded="false" />
-            <element signature="e#26362#27130#0" expanded="false" />
-            <element signature="e#27166#27277#0" expanded="false" />
-            <element signature="e#27311#27420#0" expanded="false" />
-            <element signature="e#27459#27568#0" expanded="false" />
-            <element signature="e#28092#28295#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
+    <entry file="file://$PROJECT_DIR$/demo/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -360,32 +439,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/app.js">
+    <entry file="file://$PROJECT_DIR$/demo/app/app.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="7106">
           <caret line="418" column="30" lean-forward="false" selection-start-line="418" selection-start-column="30" selection-end-line="418" selection-end-column="30" />
-          <folding>
-            <element signature="e#11919#12319#0" expanded="false" />
-            <element signature="e#12372#12731#0" expanded="false" />
-            <element signature="e#12740#13298#0" expanded="false" />
-            <element signature="e#13307#14593#0" expanded="false" />
-            <element signature="e#17898#18972#0" expanded="false" />
-            <element signature="e#19026#20604#0" expanded="false" />
-            <element signature="e#20643#21329#0" expanded="false" />
-            <element signature="e#21376#21802#0" expanded="false" />
-            <element signature="e#21848#22367#0" expanded="false" />
-            <element signature="e#22407#24614#0" expanded="false" />
-            <element signature="e#24655#26316#0" expanded="false" />
-            <element signature="e#26362#27130#0" expanded="false" />
-            <element signature="e#27166#27277#0" expanded="false" />
-            <element signature="e#27311#27420#0" expanded="false" />
-            <element signature="e#27459#27568#0" expanded="false" />
-            <element signature="e#28092#28295#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
+    <entry file="file://$PROJECT_DIR$/demo/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="10" column="27" lean-forward="false" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="27" />
@@ -393,32 +455,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/app.js">
+    <entry file="file://$PROJECT_DIR$/demo/app/app.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="7106">
           <caret line="418" column="30" lean-forward="false" selection-start-line="418" selection-start-column="30" selection-end-line="418" selection-end-column="30" />
-          <folding>
-            <element signature="e#11919#12319#0" expanded="false" />
-            <element signature="e#12372#12731#0" expanded="false" />
-            <element signature="e#12740#13298#0" expanded="false" />
-            <element signature="e#13307#14593#0" expanded="false" />
-            <element signature="e#17898#18972#0" expanded="false" />
-            <element signature="e#19026#20604#0" expanded="false" />
-            <element signature="e#20643#21329#0" expanded="false" />
-            <element signature="e#21376#21802#0" expanded="false" />
-            <element signature="e#21848#22367#0" expanded="false" />
-            <element signature="e#22407#24614#0" expanded="false" />
-            <element signature="e#24655#26316#0" expanded="false" />
-            <element signature="e#26362#27130#0" expanded="false" />
-            <element signature="e#27166#27277#0" expanded="false" />
-            <element signature="e#27311#27420#0" expanded="false" />
-            <element signature="e#27459#27568#0" expanded="false" />
-            <element signature="e#28092#28295#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
+    <entry file="file://$PROJECT_DIR$/demo/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="10" column="27" lean-forward="false" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="27" />
@@ -426,32 +471,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/app.js">
+    <entry file="file://$PROJECT_DIR$/demo/app/app.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="9248">
           <caret line="544" column="57" lean-forward="true" selection-start-line="543" selection-start-column="23" selection-end-line="544" selection-end-column="57" />
-          <folding>
-            <element signature="e#11919#12319#0" expanded="false" />
-            <element signature="e#12372#12731#0" expanded="false" />
-            <element signature="e#12740#13298#0" expanded="false" />
-            <element signature="e#13307#14593#0" expanded="false" />
-            <element signature="e#17898#18972#0" expanded="false" />
-            <element signature="e#19026#20604#0" expanded="false" />
-            <element signature="e#20643#21329#0" expanded="false" />
-            <element signature="e#21376#21802#0" expanded="false" />
-            <element signature="e#21848#22367#0" expanded="false" />
-            <element signature="e#22407#24614#0" expanded="false" />
-            <element signature="e#24655#26316#0" expanded="false" />
-            <element signature="e#26362#27130#0" expanded="false" />
-            <element signature="e#27166#27277#0" expanded="false" />
-            <element signature="e#27311#27420#0" expanded="false" />
-            <element signature="e#27459#27568#0" expanded="false" />
-            <element signature="e#28092#28295#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
+    <entry file="file://$PROJECT_DIR$/demo/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="10" column="27" lean-forward="false" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="27" />
@@ -459,32 +487,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/app.js">
+    <entry file="file://$PROJECT_DIR$/demo/app/app.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="7565">
           <caret line="445" column="16" lean-forward="false" selection-start-line="445" selection-start-column="12" selection-end-line="445" selection-end-column="16" />
-          <folding>
-            <element signature="e#11919#12319#0" expanded="false" />
-            <element signature="e#12372#12731#0" expanded="false" />
-            <element signature="e#12740#13298#0" expanded="false" />
-            <element signature="e#13307#14593#0" expanded="false" />
-            <element signature="e#17898#18972#0" expanded="false" />
-            <element signature="e#19026#20604#0" expanded="false" />
-            <element signature="e#20643#21329#0" expanded="false" />
-            <element signature="e#21376#21802#0" expanded="false" />
-            <element signature="e#21848#22367#0" expanded="false" />
-            <element signature="e#22407#24614#0" expanded="false" />
-            <element signature="e#24655#26316#0" expanded="false" />
-            <element signature="e#26362#27130#0" expanded="false" />
-            <element signature="e#27166#27277#0" expanded="false" />
-            <element signature="e#27311#27420#0" expanded="false" />
-            <element signature="e#27459#27568#0" expanded="false" />
-            <element signature="e#28092#28295#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
+    <entry file="file://$PROJECT_DIR$/demo/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="10" column="27" lean-forward="false" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="27" />
@@ -492,32 +503,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/app.js">
+    <entry file="file://$PROJECT_DIR$/demo/app/app.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5474">
           <caret line="322" column="31" lean-forward="true" selection-start-line="322" selection-start-column="31" selection-end-line="322" selection-end-column="31" />
-          <folding>
-            <element signature="e#11919#12319#0" expanded="false" />
-            <element signature="e#12372#12731#0" expanded="false" />
-            <element signature="e#12740#13298#0" expanded="false" />
-            <element signature="e#13307#14593#0" expanded="false" />
-            <element signature="e#17898#18972#0" expanded="false" />
-            <element signature="e#19026#20604#0" expanded="false" />
-            <element signature="e#20643#21329#0" expanded="false" />
-            <element signature="e#21376#21802#0" expanded="false" />
-            <element signature="e#21848#22367#0" expanded="false" />
-            <element signature="e#22407#24614#0" expanded="false" />
-            <element signature="e#24655#26316#0" expanded="false" />
-            <element signature="e#26362#27130#0" expanded="false" />
-            <element signature="e#27166#27277#0" expanded="false" />
-            <element signature="e#27311#27420#0" expanded="false" />
-            <element signature="e#27459#27568#0" expanded="false" />
-            <element signature="e#28092#28295#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
+    <entry file="file://$PROJECT_DIR$/demo/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="7" column="38" lean-forward="false" selection-start-line="7" selection-start-column="38" selection-end-line="7" selection-end-column="38" />
@@ -525,32 +519,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/app.js">
+    <entry file="file://$PROJECT_DIR$/demo/app/app.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1972">
           <caret line="116" column="29" lean-forward="false" selection-start-line="116" selection-start-column="29" selection-end-line="116" selection-end-column="29" />
-          <folding>
-            <element signature="e#11919#12319#0" expanded="false" />
-            <element signature="e#12372#12731#0" expanded="false" />
-            <element signature="e#12740#13298#0" expanded="false" />
-            <element signature="e#13307#14593#0" expanded="false" />
-            <element signature="e#17898#18972#0" expanded="false" />
-            <element signature="e#19026#20604#0" expanded="false" />
-            <element signature="e#20643#21329#0" expanded="false" />
-            <element signature="e#21376#21802#0" expanded="false" />
-            <element signature="e#21848#22367#0" expanded="false" />
-            <element signature="e#22407#24614#0" expanded="false" />
-            <element signature="e#24655#26316#0" expanded="false" />
-            <element signature="e#26362#27130#0" expanded="false" />
-            <element signature="e#27166#27277#0" expanded="false" />
-            <element signature="e#27311#27420#0" expanded="false" />
-            <element signature="e#27459#27568#0" expanded="false" />
-            <element signature="e#28092#28295#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
+    <entry file="file://$PROJECT_DIR$/demo/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="7" column="38" lean-forward="false" selection-start-line="7" selection-start-column="38" selection-end-line="7" selection-end-column="38" />
@@ -558,32 +535,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/app.js">
+    <entry file="file://$PROJECT_DIR$/demo/app/app.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="561">
           <caret line="33" column="11" lean-forward="true" selection-start-line="33" selection-start-column="11" selection-end-line="33" selection-end-column="11" />
-          <folding>
-            <element signature="e#11919#12319#0" expanded="false" />
-            <element signature="e#12372#12731#0" expanded="false" />
-            <element signature="e#12740#13298#0" expanded="false" />
-            <element signature="e#13307#14593#0" expanded="false" />
-            <element signature="e#17898#18972#0" expanded="false" />
-            <element signature="e#19026#20604#0" expanded="false" />
-            <element signature="e#20643#21329#0" expanded="false" />
-            <element signature="e#21376#21802#0" expanded="false" />
-            <element signature="e#21848#22367#0" expanded="false" />
-            <element signature="e#22407#24614#0" expanded="false" />
-            <element signature="e#24655#26316#0" expanded="false" />
-            <element signature="e#26362#27130#0" expanded="false" />
-            <element signature="e#27166#27277#0" expanded="false" />
-            <element signature="e#27311#27420#0" expanded="false" />
-            <element signature="e#27459#27568#0" expanded="false" />
-            <element signature="e#28092#28295#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
+    <entry file="file://$PROJECT_DIR$/demo/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="7" column="38" lean-forward="false" selection-start-line="7" selection-start-column="38" selection-end-line="7" selection-end-column="38" />
@@ -591,32 +551,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/app.js">
+    <entry file="file://$PROJECT_DIR$/demo/app/app.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1326">
           <caret line="78" column="11" lean-forward="false" selection-start-line="78" selection-start-column="11" selection-end-line="78" selection-end-column="11" />
-          <folding>
-            <element signature="e#11919#12319#0" expanded="false" />
-            <element signature="e#12372#12731#0" expanded="false" />
-            <element signature="e#12740#13298#0" expanded="false" />
-            <element signature="e#13307#14593#0" expanded="false" />
-            <element signature="e#17898#18972#0" expanded="false" />
-            <element signature="e#19026#20604#0" expanded="false" />
-            <element signature="e#20643#21329#0" expanded="false" />
-            <element signature="e#21376#21802#0" expanded="false" />
-            <element signature="e#21848#22367#0" expanded="false" />
-            <element signature="e#22407#24614#0" expanded="false" />
-            <element signature="e#24655#26316#0" expanded="false" />
-            <element signature="e#26362#27130#0" expanded="false" />
-            <element signature="e#27166#27277#0" expanded="false" />
-            <element signature="e#27311#27420#0" expanded="false" />
-            <element signature="e#27459#27568#0" expanded="false" />
-            <element signature="e#28092#28295#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
+    <entry file="file://$PROJECT_DIR$/demo/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -624,70 +567,106 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/app.js">
+    <entry file="file://$PROJECT_DIR$/demo/app/app.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1547">
           <caret line="91" column="21" lean-forward="false" selection-start-line="91" selection-start-column="21" selection-end-line="91" selection-end-column="21" />
-          <folding>
-            <element signature="e#11919#12319#0" expanded="false" />
-            <element signature="e#12372#12731#0" expanded="false" />
-            <element signature="e#12740#13298#0" expanded="false" />
-            <element signature="e#13307#14593#0" expanded="false" />
-            <element signature="e#17898#18972#0" expanded="false" />
-            <element signature="e#19026#20604#0" expanded="false" />
-            <element signature="e#20643#21329#0" expanded="false" />
-            <element signature="e#21376#21802#0" expanded="false" />
-            <element signature="e#21848#22367#0" expanded="false" />
-            <element signature="e#22407#24614#0" expanded="false" />
-            <element signature="e#24655#26316#0" expanded="false" />
-            <element signature="e#26362#27130#0" expanded="false" />
-            <element signature="e#27166#27277#0" expanded="false" />
-            <element signature="e#27311#27420#0" expanded="false" />
-            <element signature="e#27459#27568#0" expanded="false" />
-            <element signature="e#28092#28295#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="11" lean-forward="false" selection-start-line="16" selection-start-column="11" selection-end-line="16" selection-end-column="11" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/jquery/dist/jquery.min.js">
+    <entry file="file://$PROJECT_DIR$/src/jquery.min.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/radix-calculator.min.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1097">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/demo/node_modules/jquery/dist/jquery.min.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/radix-calculator.bundle.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-646">
+          <caret line="0" column="69426" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="79319" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/deleteme.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="0" column="1873" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="68970" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/node_modules/jquery/dist/jquery.slim.min.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="816" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/app.js">
+    <entry file="file://$PROJECT_DIR$/build/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-30">
-          <caret line="842" column="26" lean-forward="false" selection-start-line="842" selection-start-column="26" selection-end-line="842" selection-end-column="26" />
+        <state relative-caret-position="204">
+          <caret line="12" column="16" lean-forward="false" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/demo/app/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="67" column="7" lean-forward="true" selection-start-line="67" selection-start-column="7" selection-end-line="67" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/demo/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="239">
+          <caret line="33" column="33" lean-forward="false" selection-start-line="33" selection-start-column="33" selection-end-line="33" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/radix-calculator.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="33" column="32" lean-forward="false" selection-start-line="33" selection-start-column="32" selection-end-line="33" selection-end-column="32" />
           <folding>
-            <element signature="e#11919#12319#0" expanded="false" />
-            <element signature="e#12372#12731#0" expanded="false" />
-            <element signature="e#12740#13298#0" expanded="false" />
-            <element signature="e#13307#14593#0" expanded="false" />
-            <element signature="e#17898#18972#0" expanded="false" />
-            <element signature="e#19026#20604#0" expanded="false" />
-            <element signature="e#20643#21329#0" expanded="false" />
-            <element signature="e#21376#21802#0" expanded="false" />
-            <element signature="e#21848#22367#0" expanded="false" />
-            <element signature="e#22407#24614#0" expanded="false" />
-            <element signature="e#24655#26316#0" expanded="false" />
-            <element signature="e#26362#27130#0" expanded="false" />
-            <element signature="e#27166#27277#0" expanded="false" />
-            <element signature="e#27311#27420#0" expanded="false" />
-            <element signature="e#27459#27568#0" expanded="false" />
-            <element signature="e#28092#28295#0" expanded="false" />
+            <element signature="e#11921#12321#0" expanded="false" />
+            <element signature="e#17900#18974#0" expanded="false" />
+            <element signature="e#19028#20606#0" expanded="false" />
+            <element signature="e#20645#21331#0" expanded="false" />
+            <element signature="e#21378#21804#0" expanded="false" />
+            <element signature="e#21850#22369#0" expanded="false" />
+            <element signature="e#22409#24616#0" expanded="false" />
+            <element signature="e#24657#26318#0" expanded="false" />
+            <element signature="e#26364#27132#0" expanded="false" />
+            <element signature="e#27168#27279#0" expanded="false" />
+            <element signature="e#27313#27422#0" expanded="false" />
+            <element signature="e#27461#27570#0" expanded="false" />
+            <element signature="e#28094#28297#0" expanded="false" />
           </folding>
         </state>
       </provider>

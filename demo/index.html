@@ -3,7 +3,7 @@
 </head>
 <body ng-app="radix-calculator">
 <div class="container" ng-controller="converter">
-    <h1>Converter</h1>
+    <h1>Converter (when input is invalid no conversion will be done)</h1>
     <div ng-repeat="(radix, msg) in radixInfo">
         <label>{{msg}}:
             <input ng-focus="switchRadix(radix)"
@@ -29,6 +29,12 @@
         <span>Current delimiter: {{delimiter}}</span>
     </div>
     <div>
+        <label>
+            Fraction limit (for division):
+            <input type="number" ng-model="fractionLimit">
+        </label>
+    </div>
+    <div>
         <h2>Actions</h2>
         <div ng-repeat="(PROP, value) in actions">
             <label>
@@ -51,8 +57,8 @@
     <div>Result: <span ng-bind="result"></span></div>
     <div id="output"></div>
 </div>
-<script src="./node_modules/jquery/dist/jquery.min.js"></script>
 <script src="./node_modules/angular/angular.js"></script>
+<script src="../dist/radix-calculator.bundle.js"></script>
 <script src="./app/app.js"></script>
 </body>
 </html>

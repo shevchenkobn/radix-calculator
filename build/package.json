@@ -1,0 +1,15 @@
+{
+  "description": "Radix calculator builder. Requires uglify-js to be installed globally",
+  "requires": true,
+  "dependencies": {
+    "jquery": {
+      "version": "3.2.1",
+      "resolved": "https://registry.npmjs.org/jquery/-/jquery-3.2.1.tgz",
+      "integrity": "sha1-XE2d5lKvbNCncBVKYxu6ErAVx4c="
+    }
+  },
+  "scripts": {
+    "build-bundle": "uglifyjs ./node_modules/jquery/dist/jquery.slim.min.js ../src/radix-calculator.js -c -m -o ../dist/radix-calculator.bundle.js",
+    "build-min": "uglifyjs ../src/radix-calculator.js -c -m -o ../dist/radix-calculator.min.js"
+  }
+}
