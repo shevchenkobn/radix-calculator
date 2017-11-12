@@ -515,8 +515,8 @@
             }
             offset += +tempValues[i][2] === 0 ? 1 : 0;
           }
-          fillRowInv(tempValues[--i][2], r, (tempValues.length > 1 ? offset : 0) +
-            tempLength - 1 - (+tempValues[i][2] === 0 ? 1 : 0));
+          fillRowInv(tempValues[--i][2], r, (tempValues.length === 1 ? 0 : offset)
+            + tempLength - 1 - (+tempValues[i][2] === 0 ? 1 : 0));
           break;
       }
       return result.join('');
@@ -752,7 +752,7 @@
           quotient.push(converter.toArbitrary(result));
           result *= divider;
           remainder = dividend - result;
-          if (result !== 0 || !tempCalculations.length) {
+          if (!tempCalculations.length || result !== 0) {
             tempCalculations.push([convertNumberFromTo(dividend) + '',
               convertNumberFromTo(result) + '',
               convertNumberFromTo(remainder) + '']);
@@ -854,7 +854,7 @@
           value = +value;
           if (!isNaN(value)) {
             if (value < 0) {
-              fractionLimit = 0;
+              fractionLimit = 0
             } else {
               fractionLimit = ~~value;
             }
