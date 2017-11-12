@@ -725,8 +725,8 @@
           dividend += args[0][i++];
         }
         divider = +convertNumberFromTo(args[1].join(''), true);
+        dividend = convertNumberFromTo(dividend, true);
         if (!isLess) {
-          dividend = convertNumberFromTo(dividend, true);
           for (; i < args[0].length; i++) {
             makeDivisionStep(converter.toDecimal(args[0][i]));
           }
