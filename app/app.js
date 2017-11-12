@@ -376,7 +376,14 @@
     }
     
     var converter = new RadixConverter();
-    converter.delimiter = delimiter;
+  
+    function updateDelimiter(value) {
+      if (isValidDelimiter(value)) {
+        delimiter = value;
+        converter.delimiter = delimiter;
+      }
+    }
+    updateDelimiter(delimiter);
     function calculate(action, radix, args) {
       if (args.length < 2) {
         throw new TypeError('Not enough arguments for operation');
@@ -849,11 +856,7 @@
           get: function() {
             return delimiter;
           },
-          set: function(value) {
-            if (isValidDelimiter(value)) {
-              delimiter = value;
-            }
-          }
+          set: updateDelimiter
         },
         possibleDelimiters: {
           get: function() {
