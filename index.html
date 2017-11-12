@@ -18,6 +18,15 @@
             Radix:
             <input type="number" min="2" max="36" ng-model="radix">
         </label>
+        <span>Decimal point:
+            <label ng-repeat="value in possibleDelimiters">
+                <input type="radio"
+                       ng-model="$parent.delimiter"
+                       ng-value="value">
+                {{value}}
+            </label>
+        </span>
+        <span>Current delimiter: {{delimiter}}</span>
     </div>
     <div>
         <h2>Actions</h2>

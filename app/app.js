@@ -195,7 +195,7 @@
       convert: getPropDescriptor(convert),
       toDecimal: getPropDescriptor(toDecimal),
       toArbitrary: getPropDescriptor(toArbitrary),
-      isAnyRadixNumber: getPropDescriptor(isAnyRadixCypher),
+      isAnyRadixCypher: getPropDescriptor(isAnyRadixCypher),
       isValidNumber: getPropDescriptor(isValidNumber),
       isValidRadix: getPropDescriptor(isValidRadix)
     });
@@ -221,8 +221,12 @@
     }
     if (!delimiter) {
       delimiter = '.';
-    } else if (['.', ','].indexOf(delimiter) < 0) {
+    } else if (isValidDelimiter(delimiter)) {
       throw new TypeError('Bad delimiter, see previous error');
+    }
+    var possibleDelimiters = ['.', ','];
+    function isValidDelimiter(delimiter) {
+      return possibleDelimiters.indexOf(delimiter) >= 0;
     }
     
     var tdStyle = {
@@ -322,11 +326,11 @@
       } else if (start < 0) {
         start = cells[0].length - start;
       }
-      for (var j = 0, c = start; j < arg.length; j++) {
+      for (var j = 0, c = start; j < arg.length; j++, c++) {
         if (arg[j] !== delimiter) {
           cells[i][c].append(arg[j]);
         } else {
-          cells[i][--c].append(
+          cells[i][c--].append(
             $('<span>' + delimiter + '</span>').css(delimiterStyle)
           );
         }
@@ -337,7 +341,7 @@
       if (typeof limit === 'undefined') {
         limit = cells[0].length - 1;
       } else if (limit <= 0) {
-        limit = cells[0].length - limit - 1;
+        limit = cells[0].length + limit - 1;
       }
       for (var j = arg.length - 1, c = limit;
            j >= 0; j--, c--) {
@@ -350,11 +354,11 @@
         }
       }
     }
-    function putResultAndUnderscore(result) {
+    function putResultAndUnderscore(result, underscoreLength) {
       fillRowInv(result, cells.length - 1);
       underscore(underscore.enum.TOP,
         [cells.length - 1, 1],
-        [1, getCellsNumber(result) - 1]);
+        [1, underscoreLength ? underscoreLength : getCellsNumber(result) - 1]);
     }
     function putSign(sign, row, col) {
       if (!row || row < 0) {
@@ -381,7 +385,14 @@
         if (!converter.isValidNumber(arg, radix)) {
           throw new TypeError('Argument ' + arg + ' is invalid');
         }
-        return (arg + '').split('');
+        arg = arg.length ? (arg + '').toUpperCase().split('') : ['0'];
+        if (arg[0] === delimiter) {
+          arg.unshift('0');
+        } else {
+          arg = removeLeadingZeros(arg);
+          arg = removeEndingZeros(arg);
+        }
+        return arg;
       });
       var result;
       switch (action) {
@@ -405,45 +416,52 @@
           buildTable(rows, columns);
           fillRowsFromTop(args);
           putSign('-', 0, columns - argsMaxLength);
-          putResultAndUnderscore(difference);
+          putResultAndUnderscore(difference, columns - 1);
           result = difference;
           break;
         case calculateEnum.MULTIPLY:
+          if (args.length >= 2) {
+            args = args.slice(0, 2);
+          }
           var product = getProduct(args, radix);
-          var nonZeroLength = product.tempCalculations.reduce(function(prev, curr) {
-            return +curr ? prev + 1 : prev;
-          }, 0);
-          rows = 3 + nonZeroLength;
+          var nonZeroLength = product.tempCalculations.reduce(
+            function(prev, curr) {
+              return +curr !== 0 ? prev + 1 : prev;
+            }, 0);
+          rows = 3 + (nonZeroLength === 1 ? 0 : nonZeroLength);
           columns = getCellsNumber(product.product);
           buildTable(rows, columns);
           fillRowsFromTop(args);
           var multipliersLength = Math.max(getCellsNumber(args[0]),
             getCellsNumber(args[1])) - 1;
           var c = columns - multipliersLength;
-          putSign('✕', 0, c);
+          putSign('x', 0, c - 1);
           underscore(underscore.enum.TOP, [args.length, c],
             [1, multipliersLength]);
-          i = 0;
-          for (var r = args.length; i < product.tempCalculations.length;
-               i++, r++) {
-            if (!+product.tempCalculations[i]) {
-              r--;
-              continue;
+          var i = 0;
+          if (nonZeroLength !== 1) {
+            for (var r = args.length; i < product.tempCalculations.length;
+                 i++, r++) {
+              if (+product.tempCalculations[i].join('') === 0) {
+                r--;
+                continue;
+              }
+              fillRowInv(product.tempCalculations[i], r, -i);
             }
-            fillRowInv(args[i], r, -i);
           }
           putResultAndUnderscore(product.product);
           result = product.product;
           break;
         case calculateEnum.DIVIDE:
           var quotient = getQuotient(args, radix);
-          rows = quotient.tempCalculation.length + 1;
-          var tempValues = quotient.quotient.tempCalculation;
+          var tempValues = quotient.tempCalculation;
           var dividendLength = getCellsNumber(args[0]);
           var dividerLength = getCellsNumber(args[1]);
           var quotientLength = getCellsNumber(quotient.quotient);
           var remainingLength = Math.max(dividerLength, quotientLength) - 1;
           columns = dividendLength + remainingLength;
+          rows = tempValues.length ? tempValues.length * 2 + 1 : 3;
+          buildTable(rows, columns);
           underscore(underscore.enum.LEFT, [0, dividendLength], [2, 1]);
           underscore(underscore.enum.BOTTOM, [0, dividendLength],
             [1, remainingLength]);
@@ -451,35 +469,51 @@
           fillRow(args[1], 0, dividendLength);
           fillRow(quotient.quotient, 1, dividendLength);
           // getCellsNumber is used because preceding column is needed for sign
-          var tempLength = getCellsNumber(tempValues[0][0]);
-          fillRowInv(tempValues[0][1], 1, tempLength);
-          putSign('-');
-          underscore(underscore.enum.BOTTOM, [1, 1], [1, dividendLength - 2 +
-          tempValues.length > 1 ?
-            tempValues[1][0].length - tempValues[0][2].length : 0]);
-          var remainderLength = getCellsNumber(tempValues[0][2]);
-          var offset = 1 + tempLength > remainderLength ?
-            tempLength - remainderLength : 0;
-          // for tempValues getCellsNumber is
-          // not used because it doesn't contain delimiters
-          for (i = 1, r = 2; i < tempValues.length; i++, r+=2) {
-            fillRow(tempValues[i][0], r, offset);
-            tempLength = tempValues[i][0].length;
-            fillRowInv(tempValues[i][1], r + 1, offset + tempLength);
-            if (i !== tempValues.length - 1) {
-              underscore(underscore.enum.BOTTOM, [r + 1, offset], [1, tempLength +
-                tempValues[i + 1][0].length - tempValues[i][2].length]);
-              if (!+tempValues[i + 1][0]) {
-                offset += tempValues[0][1].length;
-              } else if (tempValues[i][0].length > tempValues[i][2].length) {
-                offset += tempValues[i][0].length - tempValues[i][2].length
-              }
-            } else {
-              underscore(underscore.enum.BOTTOM, [r + 1, offset], [1, tempLength]);
-            }
-            putSign('-', r, offset - 1);
-          }
           result = quotient.quotient;
+          if (tempValues.length) {
+            var tempLength = getCellsNumber(tempValues[0][0]);
+            fillRowInv(tempValues[0][1], 1, tempLength - 1);
+            putSign('-');
+            var remainderLength = getCellsNumber(tempValues[0][2]);
+            var offset = 1 + (+tempValues[0][2] === 0?
+              tempValues[0][0].length : tempLength > remainderLength ?
+                tempLength - remainderLength : 0);
+            underscore(underscore.enum.BOTTOM, [1, 1], [1,
+              tempValues[0][0].length +
+              (+tempValues[0][2] === 0 &&
+                dividendLength !== tempLength ? 1 : 0) +
+              (tempValues.length > 1 ?
+                tempValues[1][0].length - tempValues[0][2].length : 0)]);
+            // for tempValues getCellsNumber is
+            // not used because it doesn't contain delimiters
+            for (i = 1, r = 2; i < tempValues.length; i++, r += 2) {
+              fillRow(tempValues[i][0], r, offset);
+              tempLength = tempValues[i][0].length;
+              fillRowInv(tempValues[i][1], r + 1, offset + tempLength - 1);
+              putSign('-', r, offset - 1);
+              if (i !== tempValues.length - 1) {
+                underscore(underscore.enum.BOTTOM, [r + 1, offset], [1, tempLength +
+                  tempValues[i + 1][0].length - tempValues[i][2].length +
+                  (+tempValues[0][2] === 0 ? 1 : 0)]);
+                if (+tempValues[i + 1][0] === 0) {
+                  offset += tempValues[0][1].length;
+                } else if (tempValues[i][0].length > tempValues[i][2].length) {
+                  offset += tempValues[i][0].length - tempValues[i][2].length
+                }
+              } else {
+                underscore(underscore.enum.BOTTOM, [r + 1, offset], [1, tempLength]);
+              }
+              offset += +tempValues[i][2] === 0 ? 1 : 0;
+            }
+            fillRowInv(tempValues[--i][2], r, offset + (r === 2 ? 0 : tempLength - 1) -
+              (+tempValues[i][2] === 0 ? 1 : 0));
+          } else {
+            for (r = 1; r < 3; r++) {
+              fillRow("0", r, 1);
+            }
+            underscore(underscore.enum.BOTTOM, [1, 1], [1, 1]);
+            putSign('-');
+          }
           break;
       }
       return result.join('');
@@ -493,7 +527,7 @@
           var transitional = 0;
           for (var j = args[i].length - 1, r = sum.length - 1;
                j >= 0; j--, r--) {
-            if (!converter.isAnyRadixNumber(args[i][j])) {
+            if (!converter.isAnyRadixCypher(args[i][j])) {
               continue;
             }
             var result = sum[r] +
@@ -523,7 +557,7 @@
         var negativeDifference = false;
         for (var i = 1; i < args.length; i++) {
           var temp = args[i].map(toDecimal);
-          negativeDifference = !isFirstLarger(difference, temp);
+          negativeDifference = !isFirstLargerOrEqual(difference, temp);
           if (negativeDifference) {
             var t = temp;
             temp = difference;
@@ -531,16 +565,19 @@
           }
           for (var j = temp.length - 1, d = difference.length - 1;
                j >= 0; j--, d--) {
-            if (!converter.isAnyRadixNumber(temp[j])) {
+            if (!converter.isAnyRadixCypher(temp[j])) {
               continue;
             }
             difference[d] -= temp[j];
+            var notCypher = false;
             if (difference[d] < 0 && d !== 0) {
-              for (var k = d; k > 0 && difference[k] <= 0; k--) {
-                if (!converter.isAnyRadixNumber(temp[j])) {
-                  continue;
+              for (var k = d; k > 0 &&
+                   (difference[k] <= 0 ||
+                     (notCypher = !converter.isAnyRadixCypher(difference[k])));
+                   k--) {
+                if (!notCypher) {
+                  difference[k] += radix;
                 }
-                difference[k] += radix;
               }
               difference[k]--;
             }
@@ -567,13 +604,10 @@
           return Math.max(prev, getFractionLength(curr));
         }, 0);
         for (var i = 0; i < args.length; i++) {
-          var index = args[i].indexOf(delimiter);
-          args[i] = removeLeadingZeros(args[i], index);
           if (maxFractionLength > 0) {
+            var index = args[i].indexOf(delimiter);
             if (index < 0) {
               args[i].push(delimiter);
-            } else if (index === 0) {
-              args[i].unshift('0');
             }
             var zerosNumber = maxFractionLength - getFractionLength(args[i]);
             for (var j = 0; j < zerosNumber; j++) {
@@ -596,21 +630,38 @@
         }
         return arg;
       }
+      function removeEndingZeros(arg, index) {
+        if (typeof index === "undefined") {
+          index = arg.indexOf(delimiter);
+        }
+        if (index < 0) {
+          return arg;
+        }
+        var firstZeroIndex = arg.length;
+        for (var i = arg.length - 1, minEndingZeros = index;
+             i > minEndingZeros && +arg[i] === 0;
+             i--, firstZeroIndex--) {}
+        if (firstZeroIndex < arg.length) {
+          arg = arg.slice(0, firstZeroIndex === index + 1 ?
+            i : firstZeroIndex);
+        }
+        return arg;
+      }
       function getProduct(args, radix) {
         var tempCalculations = [],
           firstMultiplier = args[0].map(toDecimal);
         for (var i = args[1].length - 1; i >= 0; i--) {
-          if (!converter.isAnyRadixNumber(args[0])) {
+          if (!converter.isAnyRadixCypher(args[1][i])) {
             continue;
           }
           var transitional = 0;
           var temp = [];
           for (var j = firstMultiplier.length - 1; j >= 0; j--) {
-            if (converter.isAnyRadixNumber(firstMultiplier[j])) {
+            if (!converter.isAnyRadixCypher(firstMultiplier[j])) {
               continue;
             }
             var result = firstMultiplier[j] *
-              converter.toDecimal(args[1]) + transitional;
+              converter.toDecimal(args[1][i]) + transitional;
             var newCipher = result % radix;
             temp.push(converter.toArbitrary(newCipher));
             transitional = ~~((result - newCipher) / radix);
@@ -619,19 +670,25 @@
             temp.push(converter.toArbitrary(transitional));
           }
           temp.reverse();
-          if (+converter(temp.join(''), radix, 10) !== 0) {
+          var tempString = temp.join('');
+          if (radix === 10 && +tempString || radix !== 10 &&
+            +converter(tempString, radix, 10) !== 0) {
             tempCalculations.push(temp);
           } else {
-            tempCalculations.push('0');
+            tempCalculations.push(['0']);
           }
         }
-        var product = getSum(tempCalculations.map(function (arg, index) {
+        if (tempCalculations.length < 1) {
+          var product = tempCalculations[0];
+        } else {
+          product = getSum(tempCalculations.map(function (arg, index) {
             var zeros = [];
             for (var i = 0; i < index; i++) {
               zeros.push('0');
             }
             return arg.concat(zeros);
           }), radix, true);
+        }
         var fractionLength = getFractionLength(args[0]) + getFractionLength(args[1]);
         if (fractionLength !== 0) {
           if (fractionLength >= product.length) {
@@ -644,33 +701,34 @@
             product.splice(-fractionLength, 0, delimiter);
           }
         }
+        if (args[0][0] === '-' ^ args[1][0] === '-') {
+          product.unshift('-');
+        }
         return {
           tempCalculations: tempCalculations,
-          product: args[0][0] === '-' ^ args[0][1] === '-' ? product.unshift('-') :
-            product
+          product: product
         };
       }
       function getQuotient(args, radix) {
-        if (!+converter(args[1], radix, 10)) {
+        var divider = +convertNumberFromTo(args[1].join(''), true);
+        if (!divider) {
           throw new TypeError('Divider mustn\'t be equal to zero');
         }
         alignAndEvalForDivision(args);
         var tempCalculations = [];
         var quotient = [];
-        var dividend = '', i = 0, remainder, isLess, divider = converter(args[1], radix, 10);
-        while((isLess = !isFirstLarger(dividend, args[1])) && i < args[1].length) {
+        var dividend = '', i = 0, remainder, isLess;
+        while((isLess = !isFirstLargerOrEqual(dividend, args[1])) && i < args[0].length) {
           dividend += args[0][i++];
         }
-        if (isLess) {
-          quotient.push('0');
-          remainder = dividend;
-          tempCalculations.push([dividend, '0', remainder]);
-        } else {
-          dividend = converter(dividend, radix, 10);
+        divider = +convertNumberFromTo(args[1].join(''), true);
+        if (!isLess) {
+          dividend = convertNumberFromTo(dividend, true);
           for (; i < args[0].length; i++) {
-            makeDivisionStep(converter.toDecimal(args[i]));
+            makeDivisionStep(converter.toDecimal(args[0][i]));
           }
         }
+        makeDivisionStep();
         if (dividend !== 0) {
           quotient.push(delimiter);
           i = fractionLimit;
@@ -689,11 +747,12 @@
           }
           var result = ~~(dividend / divider);
           quotient.push(converter.toArbitrary(result));
-          result *= radix;
+          result *= divider;
           remainder = dividend - result;
           if (result !== 0) {
-            tempCalculations.push([converter(dividend, 10, radix),
-              converter(result, 10, radix), converter(remainder, 10, radix)]);
+            tempCalculations.push([convertNumberFromTo(dividend) + '',
+              convertNumberFromTo(result) + '',
+              convertNumberFromTo(remainder) + '']);
           }
           dividend = remainder * radix + additive;
         }
@@ -702,7 +761,7 @@
         var fractions = [];
         var max;
         for (var i = 0; i < 2; i++) {
-          if (fractions[i][0] === '-') {
+          if (args[i][0] === '-') {
             throw new TypeError('Arguments must be non-negative');
           }
           fractions[i] = getFractionLength(args[i]);
@@ -713,8 +772,13 @@
           }
         }
         var delta;
+        if (max === 0) {
+          return;
+        }
         for (i = 0; i < 2; i++) {
-          args[i].splice(-fractions[i] - 1, 1);
+          if (fractions[i]) {
+            args[i].splice(-fractions[i] - 1, 1);
+          }
           if ((delta = max - fractions[i]) > 0) {
             for (var j = 0; j < delta; j++) {
               args[i].push('0');
@@ -723,18 +787,18 @@
         }
       }
       function toArbitrary(cipher) {
-        return converter.isAnyRadixNumber(cipher) ?
+        return converter.isAnyRadixCypher(cipher) ?
           converter.toArbitrary(cipher) : cipher;
       }
       function toDecimal(cipher) {
-        return converter.isAnyRadixNumber(cipher) ?
+        return converter.isAnyRadixCypher(cipher) ?
           converter.toDecimal(cipher) : cipher;
       }
       function getFractionLength(arg) {
         var index = arg.indexOf(delimiter);
         return index >= 0 ? arg.length - 1 - index : 0;
       }
-      function isFirstLarger(first, second) {
+      function isFirstLargerOrEqual(first, second) {
         if (second.length > first.length) {
           return false;
         } else if (second.length < first.length) {
@@ -747,7 +811,17 @@
               return false;
             }
           }
+          return true;
         }
+      }
+      function convertNumberFromTo(arg, toDecimal) {
+        if (toDecimal) {
+          var from = radix, to = 10;
+        } else {
+          from = 10, to = radix;
+        }
+        return radix === 10 ? arg :
+          converter(arg, from, to);
       }
     }
     var fractionLimit = 10;
@@ -761,14 +835,29 @@
     Object.seal(calculateEnum);
     Object.defineProperties(calculate, {
         fractionLimit: {
-          get function () {
+          get: function () {
             return fractionLimit;
           },
-          set function (value) {
+          set: function (value) {
             value = +value;
             if (!isNaN(value)) {
               fractionLimit = ~~value;
             }
+          }
+        },
+        delimiter: {
+          get: function() {
+            return delimiter;
+          },
+          set: function(value) {
+            if (isValidDelimiter(value)) {
+              delimiter = value;
+            }
+          }
+        },
+        possibleDelimiters: {
+          get: function() {
+            return possibleDelimiters.slice();
           }
         },
         clearOutput: getPropDescriptor(function() {
@@ -859,9 +948,14 @@ angular.module('radix-calculator', [])
       }
     });
     var args = new Args(2);
-    $scope.radix = 10;
+    $scope.radix = 16;
     $scope.actions = calculator.actionEnum;
-    $scope.action = $scope.actions.SUBTRACT;
+    $scope.possibleDelimiters = calculator.possibleDelimiters;
+    $scope.delimiter = calculator.delimiter;
+    $scope.$watch('delimiter', function(newVal, oldVal, scope) {
+      calculator.delimiter = newVal;
+    });
+    $scope.action = $scope.actions.DIVIDE;
     $scope.args = args;
     $scope.calculate = function() {
       $scope.result = calculator($scope.action, $scope.radix, $scope.args.toArray());
