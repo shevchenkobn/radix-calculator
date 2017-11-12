@@ -948,14 +948,14 @@ angular.module('radix-calculator', [])
       }
     });
     var args = new Args(2);
-    $scope.radix = 16;
+    $scope.radix = 10;
     $scope.actions = calculator.actionEnum;
     $scope.possibleDelimiters = calculator.possibleDelimiters;
     $scope.delimiter = calculator.delimiter;
     $scope.$watch('delimiter', function(newVal, oldVal, scope) {
       calculator.delimiter = newVal;
     });
-    $scope.action = $scope.actions.DIVIDE;
+    $scope.action = $scope.actions.ADD;
     $scope.args = args;
     $scope.calculate = function() {
       $scope.result = calculator($scope.action, $scope.radix, $scope.args.toArray());

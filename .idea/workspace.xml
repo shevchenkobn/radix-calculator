@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0850fda0-11ae-496f-878c-cf575d96dc89" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.js" afterPath="$PROJECT_DIR$/app/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -21,7 +19,7 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-12">
+            <state relative-caret-position="-118">
               <caret line="16" column="11" lean-forward="false" selection-start-line="16" selection-start-column="11" selection-end-line="16" selection-end-column="11" />
               <folding />
             </state>
@@ -31,8 +29,8 @@
       <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="397">
-              <caret line="483" column="30" lean-forward="true" selection-start-line="483" selection-start-column="30" selection-end-line="483" selection-end-column="30" />
+            <state relative-caret-position="261">
+              <caret line="960" column="28" lean-forward="false" selection-start-line="960" selection-start-column="28" selection-end-line="960" selection-end-column="28" />
               <folding>
                 <element signature="e#11639#12039#0" expanded="false" />
                 <element signature="e#12092#12451#0" expanded="false" />
@@ -64,6 +62,7 @@
       <find>'.'</find>
       <find>parseInt</find>
       <find>!+</find>
+      <find>islarg</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -198,12 +197,12 @@
       <workItem from="1510118699204" duration="6726000" />
       <workItem from="1510130280864" duration="4138000" />
       <workItem from="1510207964043" duration="2426000" />
-      <workItem from="1510324695354" duration="39573000" />
+      <workItem from="1510324695354" duration="39677000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="115682000" />
+    <option name="totallyTimeSpent" value="115786000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1376" height="744" extended-state="6" />
@@ -626,7 +625,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-12">
+        <state relative-caret-position="-118">
           <caret line="16" column="11" lean-forward="false" selection-start-line="16" selection-start-column="11" selection-end-line="16" selection-end-column="11" />
           <folding />
         </state>
@@ -634,8 +633,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="397">
-          <caret line="483" column="30" lean-forward="true" selection-start-line="483" selection-start-column="30" selection-end-line="483" selection-end-column="30" />
+        <state relative-caret-position="261">
+          <caret line="960" column="28" lean-forward="false" selection-start-line="960" selection-start-column="28" selection-end-line="960" selection-end-column="28" />
           <folding>
             <element signature="e#11639#12039#0" expanded="false" />
             <element signature="e#12092#12451#0" expanded="false" />
