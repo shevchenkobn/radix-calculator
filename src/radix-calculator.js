@@ -481,50 +481,42 @@
           fillRow(quotient.quotient, 1, dividendLength);
           // getCellsNumber is used because preceding column is needed for sign
           result = quotient.quotient;
-          if (tempValues.length) {
-            var tempLength = getCellsNumber(tempValues[0][0]);
-            fillRowInv(tempValues[0][1], 1, tempLength - 1);
-            putSign('-');
-            var remainderLength = getCellsNumber(tempValues[0][2]);
-            var offset = 1 + (+tempValues[0][2] === 0?
-              tempValues[0][0].length : tempLength > remainderLength ?
-                tempLength - remainderLength : 0);
-            underscore(underscore.enum.BOTTOM, [1, 1], [1,
-              tempValues[0][0].length +
-              (+tempValues[0][2] === 0 &&
-              dividendLength !== tempLength ? 1 : 0) +
-              (tempValues.length > 1 ?
-                tempValues[1][0].length - tempValues[0][2].length : 0)]);
-            // for tempValues getCellsNumber is
-            // not used because it doesn't contain delimiters
-            for (i = 1, r = 2; i < tempValues.length; i++, r += 2) {
-              fillRow(tempValues[i][0], r, offset);
-              tempLength = tempValues[i][0].length;
-              fillRowInv(tempValues[i][1], r + 1, offset + tempLength - 1);
-              putSign('-', r, offset - 1);
-              if (i !== tempValues.length - 1) {
-                underscore(underscore.enum.BOTTOM, [r + 1, offset], [1, tempLength +
-                tempValues[i + 1][0].length - tempValues[i][2].length +
-                (+tempValues[0][2] === 0 ? 1 : 0)]);
-                if (+tempValues[i + 1][0] === 0) {
-                  offset += tempValues[0][1].length;
-                } else if (tempValues[i][0].length > tempValues[i][2].length) {
-                  offset += tempValues[i][0].length - tempValues[i][2].length
-                }
-              } else {
-                underscore(underscore.enum.BOTTOM, [r + 1, offset], [1, tempLength]);
+          var tempLength = getCellsNumber(tempValues[0][0]);
+          fillRowInv(tempValues[0][1], 1, tempLength - 1);
+          putSign('-');
+          var remainderLength = getCellsNumber(tempValues[0][2]);
+          var offset = 1 + (+tempValues[0][2] === 0?
+            tempValues[0][0].length : tempLength > remainderLength ?
+              tempLength - remainderLength : 0);
+          underscore(underscore.enum.BOTTOM, [1, 1], [1,
+            tempValues[0][0].length +
+            (+tempValues[0][2] === 0 &&
+            dividendLength !== tempLength ? 1 : 0) +
+            (tempValues.length > 1 ?
+              tempValues[1][0].length - tempValues[0][2].length : 0)]);
+          // for tempValues getCellsNumber is
+          // not used because it doesn't contain delimiters
+          for (i = 1, r = 2; i < tempValues.length; i++, r += 2) {
+            fillRow(tempValues[i][0], r, offset);
+            tempLength = tempValues[i][0].length;
+            fillRowInv(tempValues[i][1], r + 1, offset + tempLength - 1);
+            putSign('-', r, offset - 1);
+            if (i !== tempValues.length - 1) {
+              underscore(underscore.enum.BOTTOM, [r + 1, offset], [1, tempLength +
+              tempValues[i + 1][0].length - tempValues[i][2].length +
+              (+tempValues[0][2] === 0 ? 1 : 0)]);
+              if (+tempValues[i + 1][0] === 0) {
+                offset += tempValues[0][1].length;
+              } else if (tempValues[i][0].length > tempValues[i][2].length) {
+                offset += tempValues[i][0].length - tempValues[i][2].length
               }
-              offset += +tempValues[i][2] === 0 ? 1 : 0;
+            } else {
+              underscore(underscore.enum.BOTTOM, [r + 1, offset], [1, tempLength]);
             }
-            fillRowInv(tempValues[--i][2], r, offset + (r === 2 ? 0 : tempLength - 1) -
-              (+tempValues[i][2] === 0 ? 1 : 0));
-          } else {
-            for (r = 1; r < 3; r++) {
-              fillRow("0", r, 1);
-            }
-            underscore(underscore.enum.BOTTOM, [1, 1], [1, 1]);
-            putSign('-');
+            offset += +tempValues[i][2] === 0 ? 1 : 0;
           }
+          fillRowInv(tempValues[--i][2], r, (tempValues.length === 1 ? 0 : offset)
+            + tempLength - 1 - (+tempValues[i][2] === 0 ? 1 : 0));
           break;
       }
       return result.join('');
@@ -740,10 +732,10 @@
           }
         }
         makeDivisionStep();
-        if (dividend !== 0) {
+        if (fractionLimit && dividend !== 0) {
           quotient.push(delimiter);
           i = fractionLimit;
-          while (dividend !== 0 && i) {
+          while (dividend !== 0 && i > 0) {
             makeDivisionStep();
             i--;
           }
@@ -760,7 +752,7 @@
           quotient.push(converter.toArbitrary(result));
           result *= divider;
           remainder = dividend - result;
-          if (result !== 0) {
+          if (!tempCalculations.length || result !== 0) {
             tempCalculations.push([convertNumberFromTo(dividend) + '',
               convertNumberFromTo(result) + '',
               convertNumberFromTo(remainder) + '']);
@@ -861,7 +853,11 @@
         set: function (value) {
           value = +value;
           if (!isNaN(value)) {
-            fractionLimit = ~~value;
+            if (value < 0) {
+              fractionLimit = 0
+            } else {
+              fractionLimit = ~~value;
+            }
           }
         }
       },
