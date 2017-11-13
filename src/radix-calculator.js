@@ -574,8 +574,8 @@
             difference[d] -= temp[j];
             var notCypher = false;
             if (difference[d] < 0 && d !== 0) {
-              difference[d--] += radix;
-              for (var k = d; k > 0 &&
+              difference[d] += radix;
+              for (var k = d - 1; k > 0 &&
               (difference[k] <= 0 ||
                 (notCypher = !converter.isAnyRadixCypher(difference[k])));
                    k--) {
