@@ -32,6 +32,13 @@
         <label>
             Fraction limit (for division):
             <input type="number" ng-model="fractionLimit">
+            (0 is useful when remainder is desired)
+        </label>
+    </div>
+    <div>
+        <label>
+            Calculate twos complement sum:
+            <input type="checkbox" ng-model="twosComplement">
         </label>
     </div>
     <div>
@@ -50,17 +57,22 @@
         <input ng-repeat="(index, value) in args" ng-model="args[index]">
     </div>
     <div>
-        <button ng-hide="args.count <= 2" class="sqr-btn" ng-click="removeArg()">-</button>
-        <button class="sqr-btn" ng-click="addArg()">+</button>
+        <button ng-hide="args.count <= 2" class="sqr-btn" ng-click="removeArg()">Remove arg</button>
+        <button class="sqr-btn" ng-click="addArg()">Add arg</button>
         <button ng-click="calculate()">Calculate</button>
     </div>
     <div>Result: <span ng-bind="result"></span></div>
     <div id="output"></div>
 </div>
-<script src="./node_modules/angular/angular.js"></script>
-<!--<script src="../dist/radix-calculator.bundle.js"></script>-->
+
 <script src="../build/node_modules/jquery/dist/jquery.slim.min.js"></script>
 <script src="../src/radix-calculator.js"></script>
+
+<!-- We can either use a bundle with jquery slim included or add them as two separate files
+<script src="../dist/radix-calculator.bundle.js"></script>
+-->
+
+<script src="./node_modules/angular/angular.js"></script>
 <script src="./app/app.js"></script>
 </body>
 </html>

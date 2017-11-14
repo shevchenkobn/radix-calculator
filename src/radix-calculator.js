@@ -280,6 +280,7 @@
             .css(tdStyle);
         }
       }
+      $('<p>Rows: ' + rows + '; Columns: ' + columns + "</p>").appendTo(container);
       return cells;
     }
     function putMessage(msg) {
@@ -388,7 +389,8 @@
       }
     }
     updateDelimiter(delimiter);
-    function calculateAndDisplay(action, radix, args) {
+    var truncateZeros = true;
+    function calculateAndDisplay(action, radix, args, isTwosComplement) {
       if (args.length < 2) {
         throw new TypeError('Not enough arguments for operation');
       }
@@ -401,14 +403,17 @@
           arg.unshift('0');
         } else {
           arg = removeLeadingZeros(arg);
-          arg = removeEndingZeros(arg);
+          if (!isTwosComplement && truncateZeros) {
+            arg = removeEndingZeros(arg);
+          }
         }
         return arg;
       });
       var result;
       switch (action) {
         case calculateEnum.ADD:
-          var sum = getSum(args, radix);
+          var sum = !!isTwosComplement ? getTwoComplementSum(args, radix) :
+            getSum(args, radix);
           var rows = args.length + 1;
           var columns = getCellsNumber(sum);
           buildTable(rows, columns);
@@ -471,7 +476,10 @@
           var quotientLength = getCellsNumber(quotient.quotient);
           var remainingLength = Math.max(dividerLength, quotientLength) - 1;
           columns = dividendLength + remainingLength;
-          rows = tempValues.length ? tempValues.length * 2 + 1 : 3;
+          var nonZeroSteps = tempValues.reduce(function(prev, curr) {
+            return +curr[1] === 0 ? prev : prev + 1;
+          }, 0);
+          rows = nonZeroSteps * 2 + 1 + (+tempValues[0][1] === 0 ? 2 : 0);
           buildTable(rows, columns);
           underscore(underscore.enum.LEFT, [0, dividendLength], [2, 1]);
           underscore(underscore.enum.BOTTOM, [0, dividendLength],
@@ -479,44 +487,33 @@
           fillRow(args[0], 0, 1);
           fillRow(args[1], 0, dividendLength);
           fillRow(quotient.quotient, 1, dividendLength);
-          // getCellsNumber is used because preceding column is needed for sign
-          result = quotient.quotient;
-          var tempLength = getCellsNumber(tempValues[0][0]);
-          fillRowInv(tempValues[0][1], 1, tempLength - 1);
-          putSign('-');
-          var remainderLength = getCellsNumber(tempValues[0][2]);
-          var offset = 1 + (+tempValues[0][2] === 0?
-            tempValues[0][0].length : tempLength > remainderLength ?
-              tempLength - remainderLength : 0);
-          underscore(underscore.enum.BOTTOM, [1, 1], [1,
-            tempValues[0][0].length +
-            (+tempValues[0][2] === 0 &&
-            dividendLength !== tempLength ? 1 : 0) +
-            (tempValues.length > 1 ?
-              tempValues[1][0].length - tempValues[0][2].length : 0)]);
-          // for tempValues getCellsNumber is
-          // not used because it doesn't contain delimiters
-          for (i = 1, r = 2; i < tempValues.length; i++, r += 2) {
-            fillRow(tempValues[i][0], r, offset);
-            tempLength = tempValues[i][0].length;
-            fillRowInv(tempValues[i][1], r + 1, offset + tempLength - 1);
-            putSign('-', r, offset - 1);
+          var offset = tempValues[0][0].length;
+          for (i = 0, r = 1; i < tempValues.length; i++, r += 2) {
+            fillRowInv(tempValues[i][1], r, offset);
+            putSign('-', r - 1, offset - tempValues[i][0].length);
             if (i !== tempValues.length - 1) {
-              underscore(underscore.enum.BOTTOM, [r + 1, offset], [1, tempLength +
-              tempValues[i + 1][0].length - tempValues[i][2].length +
-              (+tempValues[0][2] === 0 ? 1 : 0)]);
-              if (+tempValues[i + 1][0] === 0) {
-                offset += tempValues[0][1].length;
-              } else if (tempValues[i][0].length > tempValues[i][2].length) {
-                offset += tempValues[i][0].length - tempValues[i][2].length
+              var hasNextZero = false;
+              var delta = +tempValues[i][2] === 0 ?
+                  tempValues[i][0].length - (hasNextZero =
+                    (+tempValues[i + 1][0] === 0) ? 1 : 0) :
+                tempValues[i][2].length - tempValues[i][2].length + 1;
+              var j = i;
+              while (+tempValues[j + 1][1] === 0) {
+                delta++;
+                j++;
               }
+              underscore(underscore.enum.BOTTOM,
+                [r, offset - tempValues[i][0].length + 1], // + (hasNextZero ? 0 : 1)
+                [1, delta + tempValues[i][0].length]);
+              i = j;
+              fillRowInv(tempValues[i + 1][0], r + 1, offset += delta);
             } else {
-              underscore(underscore.enum.BOTTOM, [r + 1, offset], [1, tempLength]);
+              fillRowInv(tempValues[i][2], r + 1, offset);
+              underscore(underscore.enum.BOTTOM, [r, offset - tempValues[i][0].length + 1],
+                [1, tempValues[i][0].length])
             }
-            offset += +tempValues[i][2] === 0 ? 1 : 0;
           }
-          fillRowInv(tempValues[--i][2], r, (tempValues.length === 1 ? 0 : offset)
-            + tempLength - 1 - (+tempValues[i][2] === 0 ? 1 : 0));
+          result = quotient.quotient;
           break;
       }
       return result.join('');
@@ -552,6 +549,42 @@
         }
         return sum.map(toArbitrary);
       }
+      function getTwoComplementSum(args, radix) {
+        if (radix !== 2) {
+          console.warn(new TypeError("Radix doesn't equal;" +
+            " will be calculated an ordinary sum"));
+          return getSum(args, radix);
+        }
+        var maxNumberLength = args.reduce(function(prev, curr) {
+          if (curr[0] === '-') {
+            throw new RangeError('All arguments must be non-negative');
+          }
+          if (curr[1] !== delimiter) {
+            throw new TypeError('Argument ' + arg.join('') + " is not in two's complement");
+          }
+          return Math.max(prev, getFractionLength(curr));
+        }, 0);
+        args.forEach(function(arg, index, args) {
+          var filling = +arg[0];
+          if (filling) {
+            arg.forEach(function (curr, i, arg) {
+              if (i < 2) {
+                return;
+              }
+              arg[i] = +!+curr;
+            });
+          }
+          if (maxNumberLength - arg.length + 2) {
+            var padding = [];
+            for (var i = 0; i < maxNumberLength - arg.length + 2; i++) {
+              padding[i] = filling;
+            }
+            args[index] = args[index].slice(0, 2).concat(padding,
+              getSum([args[index].slice(2), [1]], radix, true));
+          }
+        });
+        return getSum(args, radix, true);
+      }
       function getDifference(args, radix, isTrusted) {
         if (!isTrusted) {
           validateAndAlign(args);
@@ -574,8 +607,8 @@
             difference[d] -= temp[j];
             var notCypher = false;
             if (difference[d] < 0 && d !== 0) {
-              difference[d--] += radix;
-              for (var k = d; k > 0 &&
+              difference[d] += radix;
+              for (var k = d - 1; k > 0 &&
               (difference[k] <= 0 ||
                 (notCypher = !converter.isAnyRadixCypher(difference[k])));
                    k--) {
@@ -753,11 +786,9 @@
           quotient.push(converter.toArbitrary(result));
           result *= divider;
           remainder = dividend - result;
-          if (!tempCalculations.length || result !== 0) {
-            tempCalculations.push([convertNumberFromTo(dividend) + '',
-              convertNumberFromTo(result) + '',
-              convertNumberFromTo(remainder) + '']);
-          }
+          tempCalculations.push([convertNumberFromTo(dividend) + '',
+            convertNumberFromTo(result) + '',
+            convertNumberFromTo(remainder) + '']);
           dividend = remainder * radix + additive;
         }
       }
@@ -828,12 +859,12 @@
           converter(arg, from, to);
       }
     }
-    function safeCalculate(action, radix, args) {
+    function safeCalculate(action, radix, args, isTwoComplement) {
       try {
-        return calculateAndDisplay(action, radix, args);
+        return calculateAndDisplay(action, radix, args, isTwoComplement);
       } catch (ex) {
         putMessage(ex.message);
-        console.error(ex);
+        console.warn(ex);
         return NaN;
       }
     }
@@ -880,7 +911,15 @@
         return new RadixConverter();
       }, true),
       calculate: getPropDescriptor(safeCalculate, true),
-      actionEnum: getPropDescriptor(calculateEnum)
+      actionEnum: getPropDescriptor(calculateEnum),
+      truncateZeros: {
+        get: function() {
+          return truncateZeros;
+        },
+        set: function(value) {
+          truncateZeros = !!value;
+        }
+      }
     });
     Object.seal(safeCalculate);
     return safeCalculate;
