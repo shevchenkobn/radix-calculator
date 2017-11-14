@@ -1,10 +1,10 @@
 # Radix Calculator.JS
 ## Summary
 Provides very simple API for converting and calculating numbers in various numeral systems with radixes between 2 and 36. Main feature is **visualisation** of calculations on a sheet in a boxes. Examples:
-[Division](https://imgur.com/a/7kRH1)
-[Multiplication](https://imgur.com/a/f3EvE)
-[Addition](https://imgur.com/a/hJJ0y)
-[Subtraction](https://imgur.com/a/4yqCb)
+![Division](https://imgur.com/a/7kRH1)
+![Multiplication](https://imgur.com/a/f3EvE)
+![Addition](https://imgur.com/a/hJJ0y)
+![Subtraction](https://imgur.com/a/4yqCb)
 #### You can also see demo in [repo's subdirectory](https://github.com/shevchenkobn/radix-calculator/tree/master/demo).
 ## Usage
 ### Repo's structure
