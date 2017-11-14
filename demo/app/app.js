@@ -79,10 +79,16 @@ angular.module('radix-calculator', [])
     $scope.$watch('fractionLimit', function(newVal, oldVal, scope) {
       calculator.fractionLimit = newVal;
     });
+    $scope.truncateZeros = calculator.truncateZeros;
+    $scope.twosComplement = false;
+    $scope.$watch('truncateZeros', function(newVal, oldVal, scope) {
+      calculator.truncateZeros= newVal;
+    });
     $scope.action = $scope.actions.ADD;
     $scope.args = args;
     $scope.calculate = function() {
-      $scope.result = calculator($scope.action, $scope.radix, $scope.args.toArray());
+      $scope.result = calculator($scope.action, $scope.radix,
+        $scope.args.toArray(), $scope.twosComplement);
     };
     $scope.addArg = function() {
       args[args.count] = 0;
