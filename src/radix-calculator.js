@@ -498,7 +498,7 @@
                     (+tempValues[i + 1][0] === 0) ? 1 : 0) :
                 tempValues[i][2].length - tempValues[i][2].length + 1;
               var j = i;
-              while (+tempValues[j + 1][1] === 0) {
+              while ( j < tempValues.length - 1 && +tempValues[j + 1][1] === 0) {
                 delta++;
                 j++;
               }
