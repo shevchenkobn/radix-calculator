@@ -479,7 +479,9 @@
           var nonZeroSteps = tempValues.reduce(function(prev, curr) {
             return +curr[1] === 0 ? prev : prev + 1;
           }, 0);
-          rows = nonZeroSteps * 2 + 1 + (+tempValues[0][1] === 0 ? 2 : 0);
+          rows = nonZeroSteps * 2 + 1 + (+tempValues[0][1] === 0 ? 2 : 0) +
+            (+tempValues[tempValues.length - 1][1] === 0 &&
+            (+tempValues[tempValues.length - 1][0] !== 0 ? 2 : 0));
           buildTable(rows, columns);
           underscore(underscore.enum.LEFT, [0, dividendLength], [2, 1]);
           underscore(underscore.enum.BOTTOM, [0, dividendLength],
@@ -488,6 +490,7 @@
           fillRow(args[1], 0, dividendLength);
           fillRow(quotient.quotient, 1, dividendLength);
           var offset = tempValues[0][0].length;
+          var delimiterIndex = quotient.quotient.indexOf(delimiter);
           for (i = 0, r = 1; i < tempValues.length; i++, r += 2) {
             fillRowInv(tempValues[i][1], r, offset);
             putSign('-', r - 1, offset - tempValues[i][0].length);
@@ -498,15 +501,43 @@
                     (+tempValues[i + 1][0] === 0) ? 1 : 0) :
                 tempValues[i][2].length - tempValues[i][2].length + 1;
               var j = i;
-              while ( j < tempValues.length - 1 && +tempValues[j + 1][1] === 0) {
+              var hasLastZero = false;
+              while (j < tempValues.length - 1 && +tempValues[j + 1][1] === 0) {
+                if (j + 1 === tempValues.length - 1) {
+                  hasLastZero = true;
+                  break;
+                }
                 delta++;
                 j++;
               }
+              var offsetDelta = 0;
+              if (delimiterIndex < 0 && i < delimiterIndex && j > delimiterIndex) {
+                offsetDelta = j - delimiterIndex;
+                delta -= offsetDelta;
+              }
+              if (hasLastZero) {
+                j = tempValues.length - 1;
+                if (+tempValues[j][0] !== 0) {
+                  delta = tempValues[j][0].length - tempValues[i][2].length;
+                  underscore(underscore.enum.BOTTOM,
+                    [r, offset - tempValues[i][0].length + 1],
+                    [1, tempValues[i][0].length + delta]);
+                  fillRowInv(tempValues[j][0], r + 1, offset += delta);
+                  i = j - 1;
+                  continue;
+                } else {
+                  fillRowInv(tempValues[j - 1][2], r + 1, offset);
+                  underscore(underscore.enum.BOTTOM, [r, offset - tempValues[i][0].length + 1],
+                    [1, tempValues[i][0].length]);
+                  break;
+                }
+              }
               underscore(underscore.enum.BOTTOM,
-                [r, offset - tempValues[i][0].length + 1], // + (hasNextZero ? 0 : 1)
+                [r, offset - tempValues[i][0].length + 1],
                 [1, delta + tempValues[i][0].length]);
               i = j;
               fillRowInv(tempValues[i + 1][0], r + 1, offset += delta);
+              offset += offsetDelta;
             } else {
               fillRowInv(tempValues[i][2], r + 1, offset);
               underscore(underscore.enum.BOTTOM, [r, offset - tempValues[i][0].length + 1],
